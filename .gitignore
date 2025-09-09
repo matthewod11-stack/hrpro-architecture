@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Node (future)
+node_modules/
+
+# Playwright reports (future)
+playwright-report/
+test-results/
+
+# IDE
+.vscode/
+.idea/
