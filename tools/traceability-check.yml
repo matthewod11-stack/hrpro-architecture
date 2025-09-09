@@ -1,0 +1,60 @@
+name: Traceability Link Check
+
+on:
+  pull_request:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  traceability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas openpyxl
+
+      - name: Run validator
+        run: |
+          # Ensure tools dir exists (repo should already contain this script)
+          if [ ! -f tools/validate_traceability_md.py ]; then
+            echo "::error::tools/validate_traceability_md.py not found. Add the script to your repo."
+            exit 1
+          fi
+          python tools/validate_traceability_md.py \
+            --prd=docs/PRD/PRD_v4.0_unified_numbered.md \
+            --arch=docs/Architecture/Architecture_v4.1.md \
+            --trace=docs/traceability/Traceability_v4.1_completed_with_notes.xlsx \
+            --out=docs/traceability/Traceability_link_check.csv
+
+      - name: Fail on mismatches
+        run: |
+          python - << 'PY'
+import csv, sys
+bad = 0
+with open('docs/traceability/Traceability_link_check.csv', newline='') as f:
+    for i, row in enumerate(csv.DictReader(f), start=2):
+        status = (row.get('Status') or '').strip().upper()
+        if status != 'OK':
+            bad += 1
+print(f"Non-OK rows: {bad}")
+sys.exit(1 if bad else 0)
+PY
+
+      - name: Upload report (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traceability-link-check
+          path: docs/traceability/Traceability_link_check.csv
+          if-no-files-found: warn
