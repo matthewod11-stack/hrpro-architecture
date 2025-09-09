@@ -1,0 +1,6 @@
+Document,Old Heading,Old Number,New Number,Notes
+PRD v4.0,Advisor,-,4.2,Added numbering for consistency
+Architecture v4.1,Document Control & Versioning,0),Preface,Mapped outside PRD numbering
+Architecture v4.1,System Overview,1),1,Aligned to PRD Purpose/Scope
+UI Framework v4.0,Typography,4,6.1,Moved under PRD Design Tokens
+UI Framework v4.0,Accessibility Standards,11,5.5,Mapped to PRD Non-Functional Requirements

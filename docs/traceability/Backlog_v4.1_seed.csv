@@ -1,0 +1,10 @@
+Title,Owner,Label,Acceptance Criteria,Ref
+Wire Advisor SSE in UI with typing indicator,,"ui,advisor",SSE stream renders typing indicator; final JSON assembled,Arch §4.2; PRD §4 Advisor
+Implement /v1/data/charts with eNPS & 9-box contracts,,"backend,dashboards",Endpoints return schema-matching JSON; unit tests for formulas & bins,Arch §5.1-5.2; PRD §2 Dashboards
+Builders state machines (PIP/JD) with draft persistence,,"backend,builders",Upload→Draft→Advisor→Export works; audit log records quick_action + diffs,Arch §6; PRD §2 PIP/JD
+Export Engine branding compliance & font embedding,,"export,branding",Header/logo/footer/watermark enforced; offline font subsets embedded; manifest hash logged,Arch §7; PRD §10 Branding
+"Telemetry: TTFA, citation_rate, dashboard_render_ms",,"telemetry,metrics",Events emitted with thresholds; local dashboard shows rollups,Arch §9; PRD §11 Success Metrics
+Accessibility CI gates (axe/pa11y + Playwright keys),,"a11y,ci",CI blocks on a11y failures; reports stored as artifacts,Arch §3.1; PRD §5 Accessibility
+Design tokens import checks in FE & Export,,"design-tokens,ci","FE + Export lint confirm token usage (colors, radii, spacing, focus)",Arch §2; PRD §6 Tokens
+Golden export snapshots for PIP/JD,,"qa,export",Deterministic PDFs compared against goldens in CI; failures gate merges,Arch §7; ADR-0001
+Doc link validator in traceability (section/title checks),,"docs,qa",Matrix links verified; missing sections flagged; summary report generated,Traceability v4.1
