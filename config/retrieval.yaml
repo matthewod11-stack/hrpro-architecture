@@ -1,0 +1,7 @@
+embeddings_backend: "ollama"
+ollama:
+  model: "mxbai-embed-large"
+  endpoint: "http://localhost:11434"
+index:
+  top_k: 8
+  rerank_candidates: 40

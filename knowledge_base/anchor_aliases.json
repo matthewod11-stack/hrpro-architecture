@@ -1,0 +1,11 @@
+{
+  "§ext-onboarding-new-hires.1": ["onboarding checklist", "new hire orientation", "ramp-up plan"],
+  "§ADR-0001": ["advisor export trace", "branding compliance", "manifest hash"],
+  "§ext-brand-compliance-watermark.2": ["branding compliance", "watermark policy", "export branding"],
+  "§ext-accessibility-contrast-ratio.3": ["contrast ratio", "WCAG", "a11y requirements"],
+  "§ext-traceability-matrix.4": ["traceability matrix", "requirements mapping", "coverage matrix"],
+  "§ext-design-tokens-focus-rings.5": ["design tokens", "focus rings", "UI tokens"],
+  "§ext-telemetry-event-logging.6": ["telemetry", "event logging", "audit trail"],
+  "§ext-acceptance-criteria.7": ["acceptance criteria", "requirements", "criteria tracking"],
+  "§ext-module-colors.8": ["module colors", "color system", "palette"]
+}

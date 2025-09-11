@@ -16,3 +16,15 @@ test-results/
 # IDE
 .vscode/
 .idea/
+
+# KB external sources: ignore non-md
+knowledge_base/sources/**/*.pdf
+knowledge_base/sources/**/*.PDF
+
+# Generated KB & index artifacts
+knowledge_base/corpus.jsonl
+knowledge_base/build_report.md
+knowledge_base/anchors_index.csv
+versions/index/**
+!versions/index/.keep
+logs/**/*.jsonl

@@ -1,0 +1,7 @@
+
+priorities:
+	policies/: 1.0
+	playbooks/: 0.95
+	howto/: 0.9
+	meeting-notes/: 0.7
+	random-notes/: 0.6

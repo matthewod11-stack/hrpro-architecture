@@ -3,11 +3,22 @@ import pandas as pd
 import requests
 import time
 from app.utils import telemetry
+from app.ui.components.retry_banner import retry_banner
+from app.ui.components.toast import toast_success
+from app.ui.theme import get_palette
+from app.ui.tokens import set_mode
 
 API_URL = "http://127.0.0.1:8000/v1/data/charts"
 
-st.set_page_config(page_title="Dashboard", layout="wide")
 st.title("Dashboard")
+palette = get_palette()
+st.set_page_config(page_title="Dashboard", layout="wide")
+st.markdown(
+    f"<div style='background:{palette['header']};color:{palette['text']};padding:8px;font-size:1.5em;'>Dashboard</div>",
+    unsafe_allow_html=True,
+)
+mode = st.sidebar.radio("Theme", ["light", "dark"], index=0)
+set_mode(mode)
 
 start_time = time.time()
 
@@ -33,10 +44,11 @@ col1, col2 = st.columns(2)
 with col1:
     st.subheader("eNPS Line Chart")
     if enps_err:
-        st.error(f"Could not load eNPS chart: {enps_err}")
-        if enps_err:
-            if st.button("Retry eNPS"):
-                st.rerun()
+
+        def retry_enps():
+            toast_success("Retrying eNPS...")
+
+        retry_banner(f"Could not load eNPS chart: {enps_err}", retry_enps)
     elif not enps_data or not enps_data.get("series", {}).get("points"):
         st.warning("Upload a CSV to see insights.")
     else:
@@ -49,10 +61,11 @@ with col1:
 with col2:
     st.subheader("9-Box Table")
     if nine_box_err:
-        st.error(f"Could not load 9-box chart: {nine_box_err}")
-        if nine_box_err:
-            if st.button("Retry 9-box"):
-                st.rerun()
+
+        def retry_nine_box():
+            toast_success("Retrying 9-box...")
+
+        retry_banner(f"Could not load 9-box chart: {nine_box_err}", retry_nine_box)
     elif not nine_box_data or (
         not nine_box_data.get("cells")
         and not nine_box_data.get("series", {}).get("points")

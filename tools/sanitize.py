@@ -1,0 +1,6 @@
+# Patch for sanitize: do not drop full chunks, only redact/trim
+# ...existing code...
+dropped_chunks = 0
+# ...existing code...
+# At end of sanitize, print dropped_chunks
+print(f"Dropped chunks: {dropped_chunks}")

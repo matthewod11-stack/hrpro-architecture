@@ -1,0 +1,10 @@
+{
+  "onboarding": ["new hire", "orientation", "ramp-up", "onboarding checklist"],
+  "branding compliance": ["brand compliance", "export branding", "watermark policy"],
+  "traceability": ["requirements mapping", "coverage matrix", "link matrix", "traceability matrix"],
+  "accessibility": ["a11y", "contrast ratio", "WCAG", "accessibility contrast requirements"],
+  "design tokens": ["focus rings", "UI tokens", "theme variables"],
+  "telemetry": ["event logging", "audit trail", "metrics"],
+  "acceptance criteria": ["requirements", "test cases", "criteria tracking"],
+  "module colors": ["color system", "palette", "theme colors"]
+}

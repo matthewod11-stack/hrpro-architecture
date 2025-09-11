@@ -1,0 +1,80 @@
+{"ts": "2025-09-10T20:32:53.328494Z", "event": "time_to_first_answer_ms", "trace_id": "pending", "ms": 8}
+{"ts": "2025-09-10T20:32:53.942778Z", "event": "time_to_first_answer_ms", "trace_id": "27b6a99f-d2be-450d-a0b1-f64798b80a0c", "ms": 622}
+{"ts": "2025-09-10T20:32:53.943146Z", "event": "advisor_response_has_citation", "trace_id": "27b6a99f-d2be-450d-a0b1-f64798b80a0c", "has_citation": true}
+{"event": "builder_render", "builder_type": "306090", "ms": 2, "timestamp": "2025-09-10T22:35:29.763812Z"}
+{"event": "builder_render", "builder_type": "306090", "ms": 1, "timestamp": "2025-09-10T22:35:47.347149Z"}
+{"event": "retrieval", "topic": "What is the required contrast ratio for accessibility?", "retrieved_docs_count": 5, "ms": 1}
+{"event": "retrieval", "topic": "List the design tokens used for focus rings.", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the Advisor response contract?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "How is export branding compliance enforced?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "Where are telemetry events logged?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the minimum contrast for text in dark mode?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "How are acceptance criteria tracked?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the section for module colors?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "How does the Builder persist trace_id?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the export manifest hash?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the required contrast ratio for accessibility?", "retrieved_docs_count": 5, "ms": 2}
+{"event": "retrieval", "topic": "List the design tokens used for focus rings.", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the Advisor response contract?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "How is export branding compliance enforced?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "Where are telemetry events logged?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the minimum contrast for text in dark mode?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "How are acceptance criteria tracked?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the section for module colors?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "How does the Builder persist trace_id?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the export manifest hash?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "How is Advisor\u2192Export trace enforced?", "retrieved_docs_count": 5, "ms": 3}
+{"event": "retrieval", "topic": "What numbering and \u00a7ref rules are required?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "Where is CI traceability enforcement defined?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What are the accessibility contrast requirements?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "List the design tokens used for focus rings.", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "Where are telemetry events logged?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "How are acceptance criteria tracked?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the section for module colors?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "How does the Builder persist trace_id?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "What is the export manifest hash?", "retrieved_docs_count": 5, "ms": 0}
+{"event": "retrieval", "topic": "onboarding checklist", "retrieved_docs_count": 5, "ms": 186}
+{"event": "retrieval", "topic": "brand compliance watermark", "retrieved_docs_count": 5, "ms": 179}
+{"event": "retrieval", "topic": "How is Advisor\u2192Export trace enforced?", "retrieved_docs_count": 5, "ms": 202}
+{"event": "retrieval", "topic": "What numbering and \u00a7ref rules are required?", "retrieved_docs_count": 5, "ms": 139}
+{"event": "retrieval", "topic": "Where is CI traceability enforcement defined?", "retrieved_docs_count": 5, "ms": 133}
+{"event": "retrieval", "topic": "What are the accessibility contrast requirements?", "retrieved_docs_count": 5, "ms": 134}
+{"event": "retrieval", "topic": "List the design tokens used for focus rings.", "retrieved_docs_count": 5, "ms": 130}
+{"event": "retrieval", "topic": "Where are telemetry events logged?", "retrieved_docs_count": 5, "ms": 130}
+{"event": "retrieval", "topic": "How are acceptance criteria tracked?", "retrieved_docs_count": 5, "ms": 131}
+{"event": "retrieval", "topic": "What is the section for module colors?", "retrieved_docs_count": 5, "ms": 132}
+{"event": "retrieval", "topic": "How does the Builder persist trace_id?", "retrieved_docs_count": 5, "ms": 131}
+{"event": "retrieval", "topic": "What is the export manifest hash?", "retrieved_docs_count": 5, "ms": 130}
+{"event": "retrieval", "topic": "How is Advisor\u2192Export trace enforced?", "retrieved_docs_count": 5, "ms": 198}
+{"event": "retrieval", "topic": "What numbering and \u00a7ref rules are required?", "retrieved_docs_count": 5, "ms": 140}
+{"event": "retrieval", "topic": "Where is CI traceability enforcement defined?", "retrieved_docs_count": 5, "ms": 132}
+{"event": "retrieval", "topic": "What are the accessibility contrast requirements?", "retrieved_docs_count": 5, "ms": 131}
+{"event": "retrieval", "topic": "List the design tokens used for focus rings.", "retrieved_docs_count": 5, "ms": 129}
+{"event": "retrieval", "topic": "Where are telemetry events logged?", "retrieved_docs_count": 5, "ms": 126}
+{"event": "retrieval", "topic": "How are acceptance criteria tracked?", "retrieved_docs_count": 5, "ms": 130}
+{"event": "retrieval", "topic": "What is the section for module colors?", "retrieved_docs_count": 5, "ms": 131}
+{"event": "retrieval", "topic": "How does the Builder persist trace_id?", "retrieved_docs_count": 5, "ms": 133}
+{"event": "retrieval", "topic": "What is the export manifest hash?", "retrieved_docs_count": 5, "ms": 131}
+{"event": "retrieval_rerank", "topic": "branding compliance watermark", "candidates": 8, "top_k": 8, "ms": 224}
+{"event": "retrieval_rerank", "topic": "How is Advisor\u2192Export trace enforced?", "candidates": 8, "top_k": 8, "ms": 227}
+{"event": "retrieval_rerank", "topic": "What numbering and \u00a7ref rules are required?", "candidates": 8, "top_k": 8, "ms": 165}
+{"event": "retrieval_rerank", "topic": "Where is CI traceability enforcement defined?", "candidates": 8, "top_k": 8, "ms": 145}
+{"event": "retrieval_rerank", "topic": "What are the accessibility contrast requirements?", "candidates": 8, "top_k": 8, "ms": 142}
+{"event": "retrieval_rerank", "topic": "List the design tokens used for focus rings.", "candidates": 8, "top_k": 8, "ms": 147}
+{"event": "retrieval_rerank", "topic": "Where are telemetry events logged?", "candidates": 8, "top_k": 8, "ms": 142}
+{"event": "retrieval_rerank", "topic": "How are acceptance criteria tracked?", "candidates": 8, "top_k": 8, "ms": 142}
+{"event": "retrieval_rerank", "topic": "What is the section for module colors?", "candidates": 8, "top_k": 8, "ms": 140}
+{"event": "retrieval_rerank", "topic": "How does the Builder persist trace_id?", "candidates": 8, "top_k": 8, "ms": 139}
+{"event": "retrieval_rerank", "topic": "What is the export manifest hash?", "candidates": 8, "top_k": 8, "ms": 138}
+{"event":"retrieval_smoke","topic":acceptance\ criteria,"retrieved_docs_count":0,"ms":183}
+{"event":"retrieval_smoke","topic":onboarding\ checklist,"retrieved_docs_count":0,"ms":180}
+{"event":"retrieval_smoke","topic":acceptance\ criteria,"retrieved_docs_count":0,"ms":220}
+{"event":"retrieval_smoke","topic":onboarding\ checklist,"retrieved_docs_count":0,"ms":177}
+{"event":"retrieval_smoke","topic":acceptance\ criteria,"retrieved_docs_count":0,"ms":192}
+{"event":"retrieval_smoke","topic":onboarding\ checklist,"retrieved_docs_count":0,"ms":186}
+{"event":"retrieval_smoke","topic":acceptance\ criteria,"retrieved_docs_count":0,"ms":308}
+{"event":"retrieval_smoke","topic":onboarding\ checklist,"retrieved_docs_count":0,"ms":225}
+{"event":"retrieval_smoke","topic":acceptance\ criteria,"retrieved_docs_count":0,"ms":3785}
+{"event":"retrieval_smoke","topic":onboarding\ checklist,"retrieved_docs_count":0,"ms":3148}
+{"event":"retrieval_smoke","topic":acceptance\ criteria,"retrieved_docs_count":0,"ms":3740}
+{"event":"retrieval_smoke","topic":onboarding\ checklist,"retrieved_docs_count":0,"ms":3142}
