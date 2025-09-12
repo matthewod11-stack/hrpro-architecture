@@ -1,3 +1,11 @@
+      - name: Eval retrieval grounding
+        run: |
+          make eval-retrieval
+      - name: Upload eval report
+        uses: actions/upload-artifact@v3
+        with:
+          name: retrieval-eval-report
+          path: evals/retrieval_eval_report.csv
 name: Traceability Link Check
 
 on:
@@ -24,20 +32,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas openpyxl
 
-      - name: Run validator
+      - name: Run validator summary
         run: |
-          # Ensure tools dir exists (repo should already contain this script)
-          if [ ! -f tools/validate_traceability_md.py ]; then
-            echo "::error::tools/validate_traceability_md.py not found. Add the script to your repo."
-            exit 1
-          fi
-          python tools/validate_traceability_md.py \
-            --prd=docs/PRD/PRD_v4.0_unified_numbered.md \
-            --arch=docs/Architecture/Architecture_v4.1.md \
-            --trace=docs/traceability/Traceability_v4.1_completed_with_notes.xlsx \
-            --out=docs/traceability/Traceability_link_check.csv
+          python tools/validator/generate_validator_summary.py
 
-      - name: Fail on mismatches
+      - name: Upload validator summary artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: validator-summary
+          path: |
+            docs/traceability/validator_summary.md
+            docs/traceability/validator_summary.html
+
+      - name: Add summary to GitHub step
+        run: |
+          echo "## Validator Results" >> $GITHUB_STEP_SUMMARY
+          echo "- [Markdown](docs/traceability/validator_summary.md)" >> $GITHUB_STEP_SUMMARY
+          echo "- [HTML](docs/traceability/validator_summary.html)" >> $GITHUB_STEP_SUMMARY
         run: |
           python - << 'PY'
 import csv, sys

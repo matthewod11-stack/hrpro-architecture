@@ -1,0 +1,3 @@
+# Patch for dedupe threshold
+THRESHOLD = 0.98
+# ...existing code...

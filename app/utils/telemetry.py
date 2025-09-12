@@ -1,0 +1,13 @@
+import os
+import json
+from datetime import datetime
+
+
+def log(event: dict):
+    try:
+        os.makedirs("logs", exist_ok=True)
+        event["timestamp"] = datetime.utcnow().isoformat() + "Z"
+        with open("logs/dev_telemetry.jsonl", "a") as f:
+            f.write(json.dumps(event) + "\n")
+    except Exception as e:
+        print(f"[telemetry] Logging failed: {e}")

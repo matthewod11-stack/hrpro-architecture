@@ -1,0 +1,11 @@
+id,question,expected_sections,pass,matched_anchors,notes
+q1,How is Advisor→Export trace enforced?,"§ADR-0001,§7",True,§ADR-0001,ADR-0001 + Arch exports section
+q2,What numbering and §ref rules are required?,"§ADR-0002,§1.1,§1.2",True,§ADR-0002,ADR-0002 + PRD basics
+q3,Where is CI traceability enforcement defined?,§ADR-0003,True,§ADR-0003,ADR-0003
+q4,What are the accessibility contrast requirements?,"§11,§1.5.13",False,,UI Framework A11y + any PRD/Arch references
+q5,List the design tokens used for focus rings.,"§2.1,§4.2",False,,Token + UI Framework
+q6,Where are telemetry events logged?,"§ADR-0001,§11,§12",False,,ADR-0001 + UI Framework + acceptance
+q7,How are acceptance criteria tracked?,"§ADR-0003,§12",False,,ADR-0003 + acceptance
+q8,What is the section for module colors?,§2.1,False,,UI Framework module colors
+q9,How does the Builder persist trace_id?,"§ADR-0001,§4.1,§7",True,"§ADR-0001,§4.1",ADR-0001 + Arch contract + export
+q10,What is the export manifest hash?,"§ADR-0001,§7",True,§ADR-0001,ADR-0001 + Arch export

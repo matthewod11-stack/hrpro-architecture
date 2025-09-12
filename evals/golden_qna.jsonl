@@ -1,0 +1,10 @@
+{"id":"q1","question":"How is Advisor→Export trace enforced?","expected_sections":["§ADR-0001","§7"],"notes":"ADR-0001 + Arch exports section"}
+{"id":"q2","question":"What numbering and §ref rules are required?","expected_sections":["§ADR-0002","§1.1","§1.2"],"notes":"ADR-0002 + PRD basics"}
+{"id":"q3","question":"Where is CI traceability enforcement defined?","expected_sections":["§ADR-0003"],"notes":"ADR-0003"}
+{"id":"q4","question":"What are the accessibility contrast requirements?","expected_sections":["§11","§1.5.13"],"notes":"UI Framework A11y + any PRD/Arch references"}
+{"id":"q5","question":"List the design tokens used for focus rings.","expected_sections":["§2.1","§4.2"],"notes":"Token + UI Framework"}
+{"id":"q6","question":"Where are telemetry events logged?","expected_sections":["§ADR-0001","§11","§12"],"notes":"ADR-0001 + UI Framework + acceptance"}
+{"id":"q7","question":"How are acceptance criteria tracked?","expected_sections":["§ADR-0003","§12"],"notes":"ADR-0003 + acceptance"}
+{"id":"q8","question":"What is the section for module colors?","expected_sections":["§2.1"],"notes":"UI Framework module colors"}
+{"id":"q9","question":"How does the Builder persist trace_id?","expected_sections":["§ADR-0001","§4.1","§7"],"notes":"ADR-0001 + Arch contract + export"}
+{"id":"q10","question":"What is the export manifest hash?","expected_sections":["§ADR-0001","§7"],"notes":"ADR-0001 + Arch export"}

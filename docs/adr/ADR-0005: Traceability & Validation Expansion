@@ -1,0 +1,90 @@
+ADR-0005: Traceability & Validation Expansion
+
+Status: Proposed (2025-09-09)
+Authors: Repo Maintainer / QA Engineer
+Related ADRs: ADR-0001 (Advisor Export Trace), ADR-0002 (Unified Markdown Format), ADR-0003 (Traceability CI Enforcement), ADR-0004 (Collaboration Protocol)
+
+Context
+
+Our current validator (tools/validate_traceability_md.py) enforces structural traceability across PRD, Architecture, and UI Framework by checking numbered headings and §X.Y references
+
+ADR-0002-unified-markdown-format
+
+ADR-0003-traceability-ci-enforc…
+
+.
+
+However, several quality risks remain:
+
+Content drift: JSON contracts, design tokens, and acceptance criteria may diverge between docs.
+
+Matrix overhead: Contributors manually update Excel/CSV mappings, increasing friction.
+
+Export compliance: ADR-0001 requires branding and citation gates, but tooling does not yet verify PDF/CSV/Excel outputs.
+
+Scaling needs: As HRPro grows beyond documentation to running code (FastAPI Advisor, Streamlit UI, Export Engine), validation must evolve to cover semantic correctness, not just structure.
+
+Decision
+
+We expand traceability and validation in three layers:
+
+Semantic Validation
+
+Extend validator to check JSON/YAML/CSV snippets embedded in docs (lint + schema validation).
+
+Cross-check design tokens across PRD (§6), Architecture (§2), and UI Framework (§5) for consistency.
+
+Verify acceptance criteria (§12 in Architecture) resolve to real enforceable items.
+
+Matrix Automation
+
+Replace manual Excel editing with a YAML/JSON mapping file (docs/traceability/matrix.yaml).
+
+CI generates Traceability_link_check.csv automatically from this source.
+
+Provide CLI helper:
+
+python tools/traceability_add.py --req "PRD §4.2 Advisor" --arch "Arch §4.2" --ui "UI §7.6"
+
+
+which appends new rows in canonical format.
+
+Export Compliance Validation
+
+Introduce golden export artifacts (docs/exports/golden/).
+
+CI job diffs new exports against golden hashes for header/footer/watermark consistency.
+
+Fail build if branding compliance = false (per ADR-0001) or if golden mismatch detected.
+
+Consequences
+
+✅ Reduced drift: Design tokens, JSON contracts, and exports validated end-to-end.
+
+✅ Lower friction: Contributors update a single YAML, not a manual spreadsheet.
+
+✅ CI as gate: Builds fail when branding, traceability, or semantic correctness breaks.
+
+⚠️ Upfront effort: Requires new validator modules and golden artifact setup.
+
+⚠️ Maintenance load: Golden exports must be refreshed when intentional design changes occur.
+
+Implementation Notes
+
+Extend validate_traceability_md.py with pluggable checks: --check-json, --check-tokens, --check-acceptance.
+
+Add tools/traceability_add.py for matrix row automation.
+
+New CI workflow: .github/workflows/export-check.yml.
+
+Store golden exports under docs/exports/golden/; refresh with make refresh-exports.
+
+Related ADRs
+
+ADR-0001: Advisor Export Trace (branding compliance)
+
+ADR-0002: Unified Markdown Format (canonical docs)
+
+ADR-0003: Traceability CI Enforcement (structural validation)
+
+ADR-0004: Collaboration & Prompting Protocol (stepwise workflow)
