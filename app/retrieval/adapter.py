@@ -1,5 +1,5 @@
-import joblib
 import json
+import joblib
 import numpy as np
 from pathlib import Path
 from scipy import sparse
@@ -78,6 +78,10 @@ def retrieve(topic: str, top_k: int = 5):
         rewrite_out = rewrite(topic, anchor_aliases)
         expanded_query = rewrite_out.get("expanded_query", topic)
         # All imports are at the top of the file
+        must_have = []
+        nice_to_have = []
+    else:
+        expanded_query = topic
         must_have = []
         nice_to_have = []
     # Synonym expansion
