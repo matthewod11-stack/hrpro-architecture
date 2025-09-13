@@ -4,6 +4,7 @@ from datetime import datetime
 
 
 def log(event: dict):
+    """Persist an event dictionary to a JSON lines telemetry log."""
     try:
         os.makedirs("logs", exist_ok=True)
         event["timestamp"] = datetime.utcnow().isoformat() + "Z"
