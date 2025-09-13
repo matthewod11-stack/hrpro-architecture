@@ -7,7 +7,6 @@ from app.ui.components.tiles import render_tiles
 from app.ui.state import route_to_advisor, set_seed_query
 from app.ui.tokens import BG_SURFACE, FG_MUTED, RADIUS_MD, SPACE_MD
 
-
 SUGGESTED = [
     "How do we enforce citations in advisor answers?",
     "Draft a 30/60/90 onboarding plan for a new PM.",
@@ -72,10 +71,3 @@ for i, prompt in enumerate(SUGGESTED):
 
 st.divider()
 render_tiles()
-
-st.markdown(
-    f"<div style='margin-top:{SPACE_MD}px;color:{FG_MUTED};font-size:0.9em'>"
-    "Version: 4.1 | Workspace: " + str(st.session_state.get("workspace", "default")) + "</div>",
-    unsafe_allow_html=True,
-)
-

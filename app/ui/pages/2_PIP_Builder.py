@@ -1,7 +1,8 @@
 import streamlit as st
-from app.ui.session_utils import set_trace_id, get_trace_id
+
 from app.ui.components.retry_banner import retry_banner
-from app.ui.components.toast import toast_success, toast_error
+from app.ui.components.toast import toast_error, toast_success
+from app.ui.session_utils import get_trace_id, set_trace_id
 from app.ui.theme import get_palette
 from app.ui.tokens import set_mode
 
@@ -56,6 +57,3 @@ elif step == "Export":
         toast_success("Export succeeded!")
     except Exception as e:
         retry_banner(f"Export failed: {e}", lambda: toast_error("Retrying Export..."))
-    st.write(f"Payload for export: {payload}")
-    st.button("Export Plan")
-    st.success("Export available (stub)")

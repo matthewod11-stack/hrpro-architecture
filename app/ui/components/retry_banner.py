@@ -1,5 +1,6 @@
+from collections.abc import Callable
+
 import streamlit as st
-from typing import Callable
 
 
 def retry_banner(message: str, on_retry: Callable):

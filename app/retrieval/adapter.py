@@ -1,11 +1,13 @@
-import joblib
 import json
-import numpy as np
 from pathlib import Path
-from scipy import sparse
-import time
 import string
+import time
+
+import joblib
+import numpy as np
+from scipy import sparse
 import yaml
+
 from app.retrieval.query_rewrite import rewrite
 from app.retrieval.rerank import rerank
 
@@ -80,6 +82,10 @@ def retrieve(topic: str, top_k: int = 5):
         # All imports are at the top of the file
         must_have = []
         nice_to_have = []
+    else:
+        expanded_query = topic
+        must_have = []
+        nice_to_have = []
     # Synonym expansion
     queries = _expand_synonyms(expanded_query)
     queries = [
@@ -93,7 +99,7 @@ def retrieve(topic: str, top_k: int = 5):
     with open(CORPUS_PATH) as f:
         lines = f.readlines()
     candidates = []
-    for rank, (i, dist) in enumerate(zip(idxs[0], dists[0])):
+    for rank, (i, dist) in enumerate(zip(idxs[0], dists[0], strict=False)):
         meta = _meta[str(i)]
         text = json.loads(lines[i])["text"]
         tfidf_vec = _vectorizer.transform([text])
@@ -121,7 +127,7 @@ def retrieve(topic: str, top_k: int = 5):
         expanded_query, candidates, config, must_have, nice_to_have
     )
     final_results = []
-    for c, rscore in zip(candidates, rerank_scores):
+    for c, rscore in zip(candidates, rerank_scores, strict=False):
         final_score = 0.6 * c["hybrid_score"] + 0.4 * rscore
         c["rerank_score"] = rscore
         c["score"] = final_score

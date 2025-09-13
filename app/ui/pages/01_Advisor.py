@@ -1,7 +1,6 @@
 import json
 import time
 
-import requests
 import streamlit as st
 
 from app.ui.components.citations import render_citations

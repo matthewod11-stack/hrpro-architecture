@@ -1,6 +1,6 @@
+import numpy as np
 import requests
 import yaml
-import numpy as np
 
 
 def ollama_rerank(query, candidates):

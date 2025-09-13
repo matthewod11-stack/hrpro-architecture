@@ -1,7 +1,8 @@
 import argparse
-import uuid
-import requests
 import sys
+import uuid
+
+import requests
 
 API_BASE = "http://localhost:8000/v1/export/"
 
