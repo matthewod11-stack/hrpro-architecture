@@ -1,6 +1,7 @@
+import hashlib
+
 from fastapi import APIRouter, Body
 from fastapi.responses import JSONResponse
-import hashlib
 
 router = APIRouter(prefix="/v1/export", tags=["export"])
 
@@ -14,4 +15,7 @@ async def export_endpoint(kind: str, payload: dict = Body(...)):
         "export_branding_compliance": True,
         "export_manifest_hash": manifest_hash,
     }
+    from app.services.telemetry import emit
+
+    emit("export", {"trace_id": trace_id, "kind": kind, "manifest": manifest_hash})
     return JSONResponse(resp)

@@ -1,4 +1,3 @@
-
 from tools.build_corpus import chunks_from_external
 
 
@@ -35,7 +34,9 @@ def test_no_heading_fallback():
 def test_soft_split_long_sections():
     md = """
     ## Big Section
-    """ + ("A" * 2500)
+    """ + (
+        "A" * 2500
+    )
     chunks = list(
         chunks_from_external("policies/long.md", md, split_level="h2", max_chars=1400)
     )

@@ -1,0 +1,466 @@
+[
+  {
+    "row": 2,
+    "feature": "",
+    "status": "MISMATCH[PRD,ARCH,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7PRDv4.0\u00a72(Scope:LandingPage)+\u00a75(Accessibility:Enter=submit)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a71(SystemOverview)+\u00a73.1(AccessibilityPlaybook)+\u00a74.1(ResponseContract)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7AskYourCPOinput\u2192EntersubmitstoAdvisor",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 3,
+    "feature": "",
+    "status": "MISMATCH[PRD,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7PRDv4.0\u00a72(Scope:LandingPage\u2013ModuleTiles)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a71.1(ConceptualDiagram)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7Performance)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 4,
+    "feature": "",
+    "status": "MISMATCH[PRD,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7PRDv4.0\u00a74(FunctionalRequirements:Advisor\u2013Typingindicators)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a74.2(Streaming&UXHooks:SSEtypingindicator)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7Typingindicatorwhilemodelresponds",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 5,
+    "feature": "",
+    "status": "MISMATCH[PRD,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7PRDv4.0\u00a74(Advisor:Responsesincludesources+explainabilitytags)+\u00a711(SuccessMetrics\u226595%citations)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7explainability_tag)+\u00a79(TelemetryKPIs)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7Responsesincludecitations&'Whythislookslikethis'tag",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 6,
+    "feature": "",
+    "status": "MISMATCH[PRD,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7PRDv4.0\u00a72(Scope:Advisor\u2013Suggestedpromptsalwaysvisible)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a73.3(AppShell&Patterns:PromptRailmandated)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7PromptRail(always-visiblesuggestedprompts)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 7,
+    "feature": "",
+    "status": "MISMATCH[PRD,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7AIInsights)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a79-box)+\u00a75.2(Endpoints)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7AIInsights",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 8,
+    "feature": "",
+    "status": "MISMATCH[PRD,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7PRDv4.0\u00a74(Dashboards:Emptystate'UploadaCSVtoseeinsights.')(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a73.3(AppShell:EmptyStatepattern)+\u00a75(DashboardsService)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7UploadData+ExportDataactions",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 9,
+    "feature": "",
+    "status": "MISMATCH[PRD,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7eNPS)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a75.1(eNPSChartContract)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7attrition",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 10,
+    "feature": "",
+    "status": "MISMATCH[PRD,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a79-box)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a75.1(9-boxChartContract)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7eNPSvisualization",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 11,
+    "feature": "",
+    "status": "MISMATCH[PRD,ARCH,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7quickactions)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a76(BuildersStateMachines)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a79-boxperformancedistribution",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 12,
+    "feature": "",
+    "status": "MISMATCH[PRD,ARCH,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7Advisorquickactions)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a76(BuildersStateMachines)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7exportbrandedPIP",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 13,
+    "feature": "",
+    "status": "MISMATCH[PRD,ARCH,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7Responsibilities\u2026)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7ExportEngine",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7exportbrandedJD",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 14,
+    "feature": "",
+    "status": "MISMATCH[PRD,ARCH,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7PRDv4.0\u00a74(Dashboards+Builders:ExportsPDF/CSV/XLSXbranded)+\u00a711(SuccessMetrics:brandingrules)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7APIs)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7watermark",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 15,
+    "feature": "",
+    "status": "MISMATCH[PRD,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7focusring)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a73.1(AccessibilityPlaybook)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7predictabletaborder",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 16,
+    "feature": "",
+    "status": "MISMATCH[PRD,ARCH,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7acceptancecriteriainPRD",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7rolesincomponents",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7alert)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  },
+  {
+    "row": 17,
+    "feature": "",
+    "status": "MISMATCH[PRD,ARCH,UI]",
+    "fixes": {},
+    "ambiguous": {
+      "PRD Reference": {
+        "column": "PRD Reference",
+        "bad_ref": "\u00a7dashboardrender<10s)(docs/PRD/PRD_v4.0.pdf)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "Arch Reference": {
+        "column": "Arch Reference",
+        "bad_ref": "\u00a7Archv4.1\u00a79(Telemetry&KPIs)(docs/Architecture/Architecture_v4.1.md)",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      },
+      "UI Reference": {
+        "column": "UI Reference",
+        "bad_ref": "\u00a7Dashboards:\u201cUploadaCSVtoseeinsights\u201d",
+        "candidates": [],
+        "chosen": null,
+        "safe": false
+      }
+    }
+  }
+]

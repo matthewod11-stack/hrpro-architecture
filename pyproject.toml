@@ -1,0 +1,50 @@
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+include = "\\.pyi?$"
+exclude = """
+(
+  ^\\.git
+| ^\\.venv
+| ^__pycache__
+| ^build
+| ^dist
+| ^.kb_sync
+| ^artifacts
+| ^telemetry
+)
+"""
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+fix = true
+extend-select = [
+  "E",   # pycodestyle
+  "W",   # pycodestyle warnings
+  "F",   # pyflakes
+  "I",   # isort (imports)
+  "B",   # flake8-bugbear
+  "UP",  # pyupgrade
+  "N",   # pep8-naming
+]
+ignore = [
+  "E203",  # space before : -- Black compatibility
+  "E266",  # too many leading '#' for block comments
+]
+exclude = [
+  ".git",
+  ".venv",
+  "__pycache__",
+  "build",
+  "dist",
+  ".kb_sync",
+  "artifacts",
+  "telemetry",
+  "evals/results",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "ui", "tools", "knowledge_base"]
+combine-as-imports = true
+force-sort-within-sections = true

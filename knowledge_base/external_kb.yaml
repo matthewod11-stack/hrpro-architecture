@@ -1,0 +1,15 @@
+repos:
+  - id: ext-foundryhr-repo
+    url: https://github.com/YOURORG/YOURREPO.git
+    branch: main
+    include:
+      - "**/*.md"
+      - "**/*.pdf"
+      - "**/*.docx"
+    exclude:
+      - ".git/**"
+      - "**/node_modules/**"
+      - "**/.venv/**"
+      - "**/dist/**"
+    dest: "knowledge_base/sources/ext-foundryhr-repo"
+    anchor_prefix: "§ext-foundryhr"

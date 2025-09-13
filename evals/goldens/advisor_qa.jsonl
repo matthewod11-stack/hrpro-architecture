@@ -1,0 +1,10 @@
+{"qid":"G1","query":"How do we enforce citations in advisor answers?","must_anchor":"§1.4.5"}
+{"qid":"G2","query":"Summarize our design tokens for module colors.","must_anchor":"§2.1"}
+{"qid":"G3","query":"What are the accessibility shortcuts we enforce?","must_anchor":"§3.1"}
+{"qid":"G4","query":"What does the Export Engine require for branding?","must_anchor":"§7"}
+{"qid":"G5","query":"Define eNPS and how it's computed.","must_anchor":"§5.1"}
+{"qid":"G6","query":"What is the advisor response contract?","must_anchor":"§4.1"}
+{"qid":"G7","query":"Which pages are in the Landing→Advisor→Dashboards flow?","must_anchor":"§1"}
+{"qid":"G8","query":"List quick actions for Builder prompts.","must_anchor":"§4.3"}
+{"qid":"G9","query":"What is the 9-box model configuration?","must_anchor":"§5.1"}
+{"qid":"G10","query":"What fonts are embedded for PDF exports?","must_anchor":"§7"}

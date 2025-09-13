@@ -16,3 +16,8 @@ To build:
     make kb-retrieve
 
 See also: `app/retrieval/adapter.py` for the retrieval interface.
+
+# External KB Sync
+- Configure sources in `external_kb.yaml`.
+- Run `make kb-reindex` to clone/convert/inject anchors and rebuild indexes.
+- External anchors use `§ext-<id>` prefix. Example: `<!-- §ext-foundryhr.file-slug -->`.

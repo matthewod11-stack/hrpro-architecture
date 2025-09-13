@@ -1,0 +1,1194 @@
+{
+  "missing_refs": [
+    {
+      "row": 2,
+      "feature": "ID",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Module",
+      "candidates": []
+    },
+    {
+      "row": 2,
+      "feature": "ID",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7UIElement/Flow",
+      "candidates": []
+    },
+    {
+      "row": 2,
+      "feature": "ID",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDRequirement(short)",
+      "candidates": []
+    },
+    {
+      "row": 3,
+      "feature": "UI-001",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Landing",
+      "candidates": []
+    },
+    {
+      "row": 3,
+      "feature": "UI-001",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7AskYourCPOinput\u2192EntersubmitstoAdvisor",
+      "candidates": []
+    },
+    {
+      "row": 3,
+      "feature": "UI-001",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.4.5(Advisor)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 4,
+      "feature": "UI-002",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Landing",
+      "candidates": []
+    },
+    {
+      "row": 4,
+      "feature": "UI-002",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Modulebuttons\u2192navigatetodashboards(HRAnalytics",
+      "candidates": []
+    },
+    {
+      "row": 4,
+      "feature": "UI-002",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Engagement",
+      "candidates": []
+    },
+    {
+      "row": 4,
+      "feature": "UI-002",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Performance)",
+      "candidates": []
+    },
+    {
+      "row": 4,
+      "feature": "UI-002",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.5.11(Performance)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 5,
+      "feature": "UI-010",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Advisor",
+      "candidates": []
+    },
+    {
+      "row": 5,
+      "feature": "UI-010",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Typingindicatorwhilemodelresponds",
+      "candidates": []
+    },
+    {
+      "row": 5,
+      "feature": "UI-010",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7Userseeslivetypingindicator",
+      "candidates": []
+    },
+    {
+      "row": 5,
+      "feature": "UI-010",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7streamingresponses",
+      "candidates": []
+    },
+    {
+      "row": 6,
+      "feature": "UI-011",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Advisor",
+      "candidates": []
+    },
+    {
+      "row": 6,
+      "feature": "UI-011",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Responsesincludecitations&'Whythislookslikethis'tag",
+      "candidates": []
+    },
+    {
+      "row": 6,
+      "feature": "UI-011",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7\u226595%responsesinclude\u22651citation",
+      "candidates": []
+    },
+    {
+      "row": 6,
+      "feature": "UI-011",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7transparencytagvisible",
+      "candidates": []
+    },
+    {
+      "row": 7,
+      "feature": "UI-012",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Advisor",
+      "candidates": []
+    },
+    {
+      "row": 7,
+      "feature": "UI-012",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7PromptRail(always-visiblesuggestedprompts)",
+      "candidates": []
+    },
+    {
+      "row": 7,
+      "feature": "UI-012",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.8(8.Prompt&PersonaLayer)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Dashboards\u2013Global",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a72x2chartgrid",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7eachcardhasTitle",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Legend",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Tooltip",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7AIInsights",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7Chartwrapperpatterndocumentedandmandatory",
+      "candidates": []
+    },
+    {
+      "row": 9,
+      "feature": "UI-021",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Dashboards\u2013Global",
+      "candidates": []
+    },
+    {
+      "row": 9,
+      "feature": "UI-021",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7UploadData+ExportDataactions",
+      "candidates": []
+    },
+    {
+      "row": 9,
+      "feature": "UI-021",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7UploadparsesCSV",
+      "candidates": []
+    },
+    {
+      "row": 9,
+      "feature": "UI-021",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7Exportgeneratesbrandedreport",
+      "candidates": []
+    },
+    {
+      "row": 10,
+      "feature": "UI-030",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7HRAnalytics",
+      "candidates": []
+    },
+    {
+      "row": 10,
+      "feature": "UI-030",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Demographicbreakdown(gender/race)",
+      "candidates": []
+    },
+    {
+      "row": 10,
+      "feature": "UI-030",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7attrition",
+      "candidates": []
+    },
+    {
+      "row": 10,
+      "feature": "UI-030",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7HRAnalyticsmustincludedemographiccharts+attrition",
+      "candidates": []
+    },
+    {
+      "row": 11,
+      "feature": "UI-040",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7EmployeeEngagement",
+      "candidates": []
+    },
+    {
+      "row": 11,
+      "feature": "UI-040",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7eNPSvisualization",
+      "candidates": []
+    },
+    {
+      "row": 11,
+      "feature": "UI-040",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7IncludeeNPSwithscale",
+      "candidates": []
+    },
+    {
+      "row": 11,
+      "feature": "UI-040",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7formula",
+      "candidates": []
+    },
+    {
+      "row": 11,
+      "feature": "UI-040",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7thresholds",
+      "candidates": []
+    },
+    {
+      "row": 12,
+      "feature": "UI-050",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7PerformanceAnalysis",
+      "candidates": []
+    },
+    {
+      "row": 12,
+      "feature": "UI-050",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a79-boxperformancedistribution",
+      "candidates": []
+    },
+    {
+      "row": 12,
+      "feature": "UI-050",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7Include9-box(axes",
+      "candidates": []
+    },
+    {
+      "row": 12,
+      "feature": "UI-050",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7bins",
+      "candidates": []
+    },
+    {
+      "row": 12,
+      "feature": "UI-050",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7labels)",
+      "candidates": []
+    },
+    {
+      "row": 13,
+      "feature": "UI-060",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7PIPBuilder",
+      "candidates": []
+    },
+    {
+      "row": 13,
+      "feature": "UI-060",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Form+Advisoraligned",
+      "candidates": []
+    },
+    {
+      "row": 13,
+      "feature": "UI-060",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7stepperremoved",
+      "candidates": []
+    },
+    {
+      "row": 13,
+      "feature": "UI-060",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7exportbrandedPIP",
+      "candidates": []
+    },
+    {
+      "row": 13,
+      "feature": "UI-060",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.4.5(Advisor)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 14,
+      "feature": "UI-061",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7JDBuilder",
+      "candidates": []
+    },
+    {
+      "row": 14,
+      "feature": "UI-061",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Form+Advisoraligned",
+      "candidates": []
+    },
+    {
+      "row": 14,
+      "feature": "UI-061",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7exportbrandedJD",
+      "candidates": []
+    },
+    {
+      "row": 14,
+      "feature": "UI-061",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.4.5(Advisor)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Exports",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Brandedlayouts:headerlogoleft",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7clientnameright",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7footertext",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7watermark",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7Brandingismandatoryacrossexports",
+      "candidates": []
+    },
+    {
+      "row": 16,
+      "feature": "UI-080",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Accessibility",
+      "candidates": []
+    },
+    {
+      "row": 16,
+      "feature": "UI-080",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Keyboard:Enter=submit",
+      "candidates": []
+    },
+    {
+      "row": 16,
+      "feature": "UI-080",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Esc=close",
+      "candidates": []
+    },
+    {
+      "row": 16,
+      "feature": "UI-080",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7predictabletaborder",
+      "candidates": []
+    },
+    {
+      "row": 16,
+      "feature": "UI-080",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7WCAGAA+explicitkeyboardbehaviors",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Accessibility",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Contrastratio\u22654.5:1",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7ARIAroles(nav",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7main",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7form",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7button",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7alert)",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.5.13(Accessibility(Enforceable))(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 18,
+      "feature": "UI-090",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7EmptyStates",
+      "candidates": []
+    },
+    {
+      "row": 18,
+      "feature": "UI-090",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Dashboards:\u201cUploadaCSVtoseeinsights\u201d",
+      "candidates": []
+    },
+    {
+      "row": 18,
+      "feature": "UI-090",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.4.6(Dashboards)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 19,
+      "feature": "Advisor SSE streaming UI integration",
+      "column": "UI Reference",
+      "bad_ref": "\u00a77.6",
+      "candidates": [
+        "\u00a71.6"
+      ]
+    },
+    {
+      "row": 20,
+      "feature": "Citation chips + drawer (a11y)",
+      "column": "UI Reference",
+      "bad_ref": "\u00a77.6",
+      "candidates": [
+        "\u00a71.6"
+      ]
+    },
+    {
+      "row": 21,
+      "feature": "Export Summary (PDF) button",
+      "column": "UI Reference",
+      "bad_ref": "\u00a77.6",
+      "candidates": [
+        "\u00a71.6"
+      ]
+    },
+    {
+      "row": 22,
+      "feature": "Telemetry dashboard",
+      "column": "UI Reference",
+      "bad_ref": "\u00a77.6",
+      "candidates": [
+        "\u00a71.6"
+      ]
+    },
+    {
+      "row": 23,
+      "feature": "E2E demo script",
+      "column": "UI Reference",
+      "bad_ref": "\u00a77.6",
+      "candidates": [
+        "\u00a71.6"
+      ]
+    }
+  ],
+  "fixed": 0,
+  "counts": {
+    "PRD Reference": 17,
+    "Arch Reference": 37,
+    "UI Reference": 29
+  },
+  "examples": [
+    {
+      "row": 2,
+      "feature": "ID",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Module",
+      "candidates": []
+    },
+    {
+      "row": 2,
+      "feature": "ID",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7UIElement/Flow",
+      "candidates": []
+    },
+    {
+      "row": 2,
+      "feature": "ID",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDRequirement(short)",
+      "candidates": []
+    },
+    {
+      "row": 3,
+      "feature": "UI-001",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Landing",
+      "candidates": []
+    },
+    {
+      "row": 3,
+      "feature": "UI-001",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7AskYourCPOinput\u2192EntersubmitstoAdvisor",
+      "candidates": []
+    },
+    {
+      "row": 3,
+      "feature": "UI-001",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.4.5(Advisor)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 4,
+      "feature": "UI-002",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Landing",
+      "candidates": []
+    },
+    {
+      "row": 4,
+      "feature": "UI-002",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Modulebuttons\u2192navigatetodashboards(HRAnalytics",
+      "candidates": []
+    },
+    {
+      "row": 4,
+      "feature": "UI-002",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Engagement",
+      "candidates": []
+    },
+    {
+      "row": 4,
+      "feature": "UI-002",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Performance)",
+      "candidates": []
+    },
+    {
+      "row": 4,
+      "feature": "UI-002",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.5.11(Performance)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 5,
+      "feature": "UI-010",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Advisor",
+      "candidates": []
+    },
+    {
+      "row": 5,
+      "feature": "UI-010",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Typingindicatorwhilemodelresponds",
+      "candidates": []
+    },
+    {
+      "row": 5,
+      "feature": "UI-010",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7Userseeslivetypingindicator",
+      "candidates": []
+    },
+    {
+      "row": 5,
+      "feature": "UI-010",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7streamingresponses",
+      "candidates": []
+    },
+    {
+      "row": 6,
+      "feature": "UI-011",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Advisor",
+      "candidates": []
+    },
+    {
+      "row": 6,
+      "feature": "UI-011",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Responsesincludecitations&'Whythislookslikethis'tag",
+      "candidates": []
+    },
+    {
+      "row": 6,
+      "feature": "UI-011",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7\u226595%responsesinclude\u22651citation",
+      "candidates": []
+    },
+    {
+      "row": 6,
+      "feature": "UI-011",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7transparencytagvisible",
+      "candidates": []
+    },
+    {
+      "row": 7,
+      "feature": "UI-012",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Advisor",
+      "candidates": []
+    },
+    {
+      "row": 7,
+      "feature": "UI-012",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7PromptRail(always-visiblesuggestedprompts)",
+      "candidates": []
+    },
+    {
+      "row": 7,
+      "feature": "UI-012",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.8(8.Prompt&PersonaLayer)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Dashboards\u2013Global",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a72x2chartgrid",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7eachcardhasTitle",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Legend",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Tooltip",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7AIInsights",
+      "candidates": []
+    },
+    {
+      "row": 8,
+      "feature": "UI-020",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7Chartwrapperpatterndocumentedandmandatory",
+      "candidates": []
+    },
+    {
+      "row": 9,
+      "feature": "UI-021",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Dashboards\u2013Global",
+      "candidates": []
+    },
+    {
+      "row": 9,
+      "feature": "UI-021",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7UploadData+ExportDataactions",
+      "candidates": []
+    },
+    {
+      "row": 9,
+      "feature": "UI-021",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7UploadparsesCSV",
+      "candidates": []
+    },
+    {
+      "row": 9,
+      "feature": "UI-021",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7Exportgeneratesbrandedreport",
+      "candidates": []
+    },
+    {
+      "row": 10,
+      "feature": "UI-030",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7HRAnalytics",
+      "candidates": []
+    },
+    {
+      "row": 10,
+      "feature": "UI-030",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Demographicbreakdown(gender/race)",
+      "candidates": []
+    },
+    {
+      "row": 10,
+      "feature": "UI-030",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7attrition",
+      "candidates": []
+    },
+    {
+      "row": 10,
+      "feature": "UI-030",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7HRAnalyticsmustincludedemographiccharts+attrition",
+      "candidates": []
+    },
+    {
+      "row": 11,
+      "feature": "UI-040",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7EmployeeEngagement",
+      "candidates": []
+    },
+    {
+      "row": 11,
+      "feature": "UI-040",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7eNPSvisualization",
+      "candidates": []
+    },
+    {
+      "row": 11,
+      "feature": "UI-040",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7IncludeeNPSwithscale",
+      "candidates": []
+    },
+    {
+      "row": 11,
+      "feature": "UI-040",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7formula",
+      "candidates": []
+    },
+    {
+      "row": 11,
+      "feature": "UI-040",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7thresholds",
+      "candidates": []
+    },
+    {
+      "row": 12,
+      "feature": "UI-050",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7PerformanceAnalysis",
+      "candidates": []
+    },
+    {
+      "row": 12,
+      "feature": "UI-050",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a79-boxperformancedistribution",
+      "candidates": []
+    },
+    {
+      "row": 12,
+      "feature": "UI-050",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7Include9-box(axes",
+      "candidates": []
+    },
+    {
+      "row": 12,
+      "feature": "UI-050",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7bins",
+      "candidates": []
+    },
+    {
+      "row": 12,
+      "feature": "UI-050",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7labels)",
+      "candidates": []
+    },
+    {
+      "row": 13,
+      "feature": "UI-060",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7PIPBuilder",
+      "candidates": []
+    },
+    {
+      "row": 13,
+      "feature": "UI-060",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Form+Advisoraligned",
+      "candidates": []
+    },
+    {
+      "row": 13,
+      "feature": "UI-060",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7stepperremoved",
+      "candidates": []
+    },
+    {
+      "row": 13,
+      "feature": "UI-060",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7exportbrandedPIP",
+      "candidates": []
+    },
+    {
+      "row": 13,
+      "feature": "UI-060",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.4.5(Advisor)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 14,
+      "feature": "UI-061",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7JDBuilder",
+      "candidates": []
+    },
+    {
+      "row": 14,
+      "feature": "UI-061",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Form+Advisoraligned",
+      "candidates": []
+    },
+    {
+      "row": 14,
+      "feature": "UI-061",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7exportbrandedJD",
+      "candidates": []
+    },
+    {
+      "row": 14,
+      "feature": "UI-061",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.4.5(Advisor)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Exports",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Brandedlayouts:headerlogoleft",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7clientnameright",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7footertext",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7watermark",
+      "candidates": []
+    },
+    {
+      "row": 15,
+      "feature": "UI-070",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7Brandingismandatoryacrossexports",
+      "candidates": []
+    },
+    {
+      "row": 16,
+      "feature": "UI-080",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Accessibility",
+      "candidates": []
+    },
+    {
+      "row": 16,
+      "feature": "UI-080",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Keyboard:Enter=submit",
+      "candidates": []
+    },
+    {
+      "row": 16,
+      "feature": "UI-080",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Esc=close",
+      "candidates": []
+    },
+    {
+      "row": 16,
+      "feature": "UI-080",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7predictabletaborder",
+      "candidates": []
+    },
+    {
+      "row": 16,
+      "feature": "UI-080",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7WCAGAA+explicitkeyboardbehaviors",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7Accessibility",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Contrastratio\u22654.5:1",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7ARIAroles(nav",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7main",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7form",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7button",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7alert)",
+      "candidates": []
+    },
+    {
+      "row": 17,
+      "feature": "UI-081",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.5.13(Accessibility(Enforceable))(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 18,
+      "feature": "UI-090",
+      "column": "PRD Reference",
+      "bad_ref": "\u00a7EmptyStates",
+      "candidates": []
+    },
+    {
+      "row": 18,
+      "feature": "UI-090",
+      "column": "Arch Reference",
+      "bad_ref": "\u00a7Dashboards:\u201cUploadaCSVtoseeinsights\u201d",
+      "candidates": []
+    },
+    {
+      "row": 18,
+      "feature": "UI-090",
+      "column": "UI Reference",
+      "bad_ref": "\u00a7PRDv4.0\u00a71.4.6(Dashboards)(docs/PRD/PRD_v4.0_unified_numbered.md)",
+      "candidates": []
+    },
+    {
+      "row": 19,
+      "feature": "Advisor SSE streaming UI integration",
+      "column": "UI Reference",
+      "bad_ref": "\u00a77.6",
+      "candidates": [
+        "\u00a71.6"
+      ]
+    },
+    {
+      "row": 20,
+      "feature": "Citation chips + drawer (a11y)",
+      "column": "UI Reference",
+      "bad_ref": "\u00a77.6",
+      "candidates": [
+        "\u00a71.6"
+      ]
+    },
+    {
+      "row": 21,
+      "feature": "Export Summary (PDF) button",
+      "column": "UI Reference",
+      "bad_ref": "\u00a77.6",
+      "candidates": [
+        "\u00a71.6"
+      ]
+    },
+    {
+      "row": 22,
+      "feature": "Telemetry dashboard",
+      "column": "UI Reference",
+      "bad_ref": "\u00a77.6",
+      "candidates": [
+        "\u00a71.6"
+      ]
+    },
+    {
+      "row": 23,
+      "feature": "E2E demo script",
+      "column": "UI Reference",
+      "bad_ref": "\u00a77.6",
+      "candidates": [
+        "\u00a71.6"
+      ]
+    }
+  ]
+}
