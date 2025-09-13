@@ -1,10 +1,12 @@
-# app/ui/Home.py
+"""Home page for the HRPro UI."""
+
+import json
+import os
+import time
+from datetime import datetime
+
 import streamlit as st
 import requests
-import json
-import time
-import os
-from datetime import datetime
 
 # ----- Page setup -----
 st.set_page_config(page_title="HRPro", layout="wide")
