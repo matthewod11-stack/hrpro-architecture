@@ -1,15 +1,19 @@
 repos:
-  - repo: https://github.com/psf/black
-    rev: 24.3.0
-    hooks:
-      - id: black
-        files: ^(app|tools|tests|ui)/
-
-  - repo: https://github.com/pycqa/ruff-pre-commit
+  - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.6.2
     hooks:
       - id: ruff
+        name: ruff (lint)
         args: [--fix]
+        files: ^(app|tools|tests|ui)/
+      - id: ruff-format
+        name: ruff (format)
+        files: ^(app|tools|tests|ui)/
+
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+      - id: black
         files: ^(app|tools|tests|ui)/
 
   - repo: https://github.com/pre-commit/mirrors-mypy
@@ -35,16 +39,7 @@ repos:
         language: system
         pass_filenames: false
         files: ^(app|tools|tests)/
-repos:
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.5.7
-    hooks:
-      - id: ruff          # lint
-      - id: ruff-format   # format
-  - repo: https://github.com/psf/black
-    rev: 24.8.0
-    hooks:
-      - id: black
+
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.12.1
     hooks:
