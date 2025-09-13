@@ -28,7 +28,7 @@ class AdvisorRequest(BaseModel):
 
 
 @router.post("/answer", response_model=AdvisorResponse)
-def advisor_answer(req: AdvisorRequest):
+def advisor_answer(req: AdvisorRequest) -> AdvisorResponse:
     t0 = time.perf_counter()
     # Simulate summary, findings, etc.
     summary = f"Stub summary for: {req.prompt}"
