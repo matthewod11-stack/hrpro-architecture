@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 import json
+from typing import Any
 import uuid
 
 from fastapi import APIRouter
@@ -12,22 +14,33 @@ from app.services.advisor_orchestrator import stream_advisor_answer
 router = APIRouter()
 
 
-def _sse_frame(obj: dict) -> bytes:
+def _sse_frame(obj: dict[str, Any]) -> bytes:
+    """Encode a Python object as an SSE data frame."""
     return f"data: {json.dumps(obj, ensure_ascii=False)}\n\n".encode()
 
 
 @router.post("/v1/advisor/answer")
-def advisor_answer(q: AdvisorQuery):
+def advisor_answer(q: AdvisorQuery) -> StreamingResponse:
+    """
+    SSE endpoint that streams advisor events.
+
+    Contract: emits at least a 'start', one or more streamed events from the orchestrator,
+    and a final 'ping' to encourage client flush.
+    """
     trace_id = "adv_" + uuid.uuid4().hex
 
-    def gen():
-        # surface trace_id immediately so UI can display it
+    def gen() -> Iterator[bytes]:
+        # Surface trace_id immediately so UI can display it
         yield _sse_frame({"event": "start", "trace_id": trace_id})
-        # heartbeat delta to coax flush
+        # Heartbeat delta to coax flush
         yield _sse_frame({"event": "delta", "text": "", "trace_id": trace_id})
         for evt in stream_advisor_answer(q, trace_id):
+            # Each evt is expected to be a dict containing at least {"event": "...", ...}
+            # Ensure the trace_id is present on every frame
+            if "trace_id" not in evt:
+                evt["trace_id"] = trace_id
             yield _sse_frame(evt)
-        # final heartbeat to flush last frame
+        # Final heartbeat to flush last frame
         yield _sse_frame({"event": "ping", "trace_id": trace_id})
 
     headers = {

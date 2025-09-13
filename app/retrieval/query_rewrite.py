@@ -1,8 +1,10 @@
-import os
 import json
-import re
-import yaml
+import os
 from pathlib import Path
+import re
+
+import yaml
+
 from app.retrieval import ollama_client
 
 TELEMETRY_PATH = Path(__file__).parent.parent.parent / "logs/dev_telemetry.jsonl"

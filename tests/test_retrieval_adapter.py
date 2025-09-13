@@ -1,4 +1,8 @@
 import pytest
+
+pytest.importorskip("sklearn")
+pytest.importorskip("scipy")
+
 from app.retrieval.adapter import retrieve
 
 

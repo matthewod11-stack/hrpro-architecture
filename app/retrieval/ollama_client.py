@@ -1,13 +1,13 @@
-import os
-import json
-import time
-from pathlib import Path
-import requests
-import hashlib
-import sqlite3
-import numpy as np
 from datetime import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import sqlite3
+import time
 
+import numpy as np
+import requests
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434").rstrip("/")
 OLLAMA_TIMEOUT_S = int(os.getenv("OLLAMA_TIMEOUT_S", "8"))
@@ -160,7 +160,7 @@ def cache_put_many(model: str, texts: list[str], vectors: list[np.ndarray]) -> N
     now = datetime.utcnow().isoformat()
     rows = [
         (_mk_key(model, t), model, dim, _to_blob(v), now)
-        for t, v in zip(texts, vectors)
+        for t, v in zip(texts, vectors, strict=False)
     ]
     conn.execute("BEGIN IMMEDIATE")
     conn.executemany(
@@ -193,7 +193,7 @@ def embed_texts(texts: list[str], model=None, endpoint=None) -> np.ndarray:
     if misses:
         for start in range(0, len(misses), BATCH_SIZE):
             batch = misses[start : start + BATCH_SIZE]
-            batch_idx, batch_texts = zip(*batch)
+            batch_idx, batch_texts = zip(*batch, strict=False)
             for attempt in range(MAX_RETRIES):
                 try:
                     resp = requests.post(
@@ -220,7 +220,7 @@ def embed_texts(texts: list[str], model=None, endpoint=None) -> np.ndarray:
                                 f"NaN in embedding for batch idx {batch_idx}"
                             )
                     cache_put_many(model, list(batch_texts), batch_vecs)
-                    for i, v in zip(batch_idx, batch_vecs):
+                    for i, v in zip(batch_idx, batch_vecs, strict=False):
                         out[i] = v
                     break
                 except Exception:
