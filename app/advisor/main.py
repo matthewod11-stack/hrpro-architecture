@@ -1,13 +1,13 @@
+"""FastAPI application entrypoint for the Advisor service."""
+
+import json
+import time
+import uuid
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 
-# import routers
-from app.api.routers import advisor
-from app.api.routers import charts
-
-import json
-import uuid
-import time
+from app.api.routers import advisor, charts
 
 
 app = FastAPI(title="HRPro Advisor API")
