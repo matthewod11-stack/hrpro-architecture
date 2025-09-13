@@ -9,15 +9,12 @@ import json
 import uuid
 import time
 
-# create the app
-app = FastAPI()
-
-# include routers
-app.include_router(advisor.router)
-app.include_router(charts.router)
-
 
 app = FastAPI(title="HRPro Advisor API")
+
+# include routers after app creation
+app.include_router(advisor.router)
+app.include_router(charts.router)
 
 ADVISOR_SHAPE = {
     "summary": "",
