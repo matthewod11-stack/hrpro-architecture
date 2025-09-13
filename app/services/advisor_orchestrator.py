@@ -38,10 +38,11 @@ def stream_advisor_answer(q: AdvisorQuery, trace_id: str) -> Iterator[dict]:
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ]
-        for delta in ollama_client.chat(model=model, messages=messages, stream=True):
-            txt = delta.get("text", "")
-            if not txt:
-                continue
+        resp = ollama_client.chat(model=model, messages=messages, stream=False)
+        txt = resp.get("message", resp.get("response", ""))
+        if isinstance(txt, dict):
+            txt = txt.get("content", "")
+        if txt:
             buffer.append(txt)
             if not ttfa_emitted:
                 ttfa = int((time.perf_counter() - t0) * 1000)
@@ -51,7 +52,6 @@ def stream_advisor_answer(q: AdvisorQuery, trace_id: str) -> Iterator[dict]:
                 "event": "delta",
                 "text": txt,
                 "trace_id": trace_id,
-                "event": "delta",
             }
 
         full = "".join(buffer).strip()
@@ -97,7 +97,6 @@ def stream_advisor_answer(q: AdvisorQuery, trace_id: str) -> Iterator[dict]:
             "event": "final",
             "answer": answer.model_dump(),
             "trace_id": trace_id,
-            "event": "final",
         }
     except Exception as e:
         # emit error event
@@ -105,7 +104,6 @@ def stream_advisor_answer(q: AdvisorQuery, trace_id: str) -> Iterator[dict]:
             "event": "error",
             "message": str(e),
             "trace_id": trace_id,
-            "event": "error",
         }
         # emit a final event with empty answer to guarantee contract
         answer = AdvisorAnswer(
@@ -121,5 +119,4 @@ def stream_advisor_answer(q: AdvisorQuery, trace_id: str) -> Iterator[dict]:
             "event": "final",
             "answer": answer.model_dump(),
             "trace_id": trace_id,
-            "event": "final",
         }

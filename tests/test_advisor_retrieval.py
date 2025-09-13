@@ -25,11 +25,10 @@ def test_retrieval_returns_anchors(monkeypatch):
     monkeypatch.setattr(retrieval, "retrieve", lambda q, top_k=6: fake)
     from app.retrieval import ollama_client
 
-    def fake_chat(*args, **kwargs):
-        yield {"text": "Hello "}
-        yield {"text": "world."}
+    def fake_chat(**kwargs):
+        return {"response": "Hello world."}
 
-    monkeypatch.setattr(ollama_client, "chat", lambda **kw: fake_chat())
+    monkeypatch.setattr(ollama_client, "chat", fake_chat)
     q = AdvisorQuery(query="How do we enforce citations?", top_k=2)
     gen = stream_advisor_answer(q, "adv_test")
     events = list(gen)
@@ -44,7 +43,7 @@ def test_no_citations_tag(monkeypatch):
     monkeypatch.setattr(retrieval, "retrieve", lambda q, top_k=6: [])
     from app.retrieval import ollama_client
 
-    monkeypatch.setattr(ollama_client, "chat", lambda **kw: iter([{"text": "ok"}]))
+    monkeypatch.setattr(ollama_client, "chat", lambda **kw: {"response": "ok"})
     events = list(stream_advisor_answer(AdvisorQuery(query="x"), "adv_x"))
     final = next(e for e in events if e.get("event") == "final")
     assert final["answer"]["explainability_tag"] == "no_citation_context"

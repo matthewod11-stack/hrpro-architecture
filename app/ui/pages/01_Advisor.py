@@ -7,8 +7,8 @@ from app.ui.components.citations import render_citations
 from app.ui.components.sse import stream_sse
 from app.ui.state import clear_advisor_state, get_state, set_state
 
-st.set_page_config(page_title="Ask your CPO", page_icon="🤖")
 
+st.set_page_config(page_title="Ask your CPO", page_icon="🤖")
 st.title("Ask your CPO")
 
 seed_query = st.session_state.get("seed_query", "")
@@ -85,7 +85,6 @@ if submit or (query_param and not get_state("advisor_final")):
                 key="copy_trace_id",
                 on_click=lambda: st.session_state.update({"copied_trace_id": trace_id}),
             )
-            # Telemetry
             total_ms = int((time.time() - start) * 1000)
             telemetry = {
                 "ts": int(time.time()),
@@ -101,3 +100,4 @@ if submit or (query_param and not get_state("advisor_final")):
             except Exception:
                 pass
             break
+

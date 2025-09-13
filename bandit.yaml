@@ -1,0 +1,7 @@
+# Minimal Bandit configuration for CI
+exclude_dirs:
+  - .venv
+  - telemetry
+  - evals/results
+skips: []
+

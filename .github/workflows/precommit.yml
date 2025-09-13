@@ -16,4 +16,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
       - name: Run pre-commit on all files
+        env:
+          FAST_TESTS: "0"
         run: pre-commit run --all-files

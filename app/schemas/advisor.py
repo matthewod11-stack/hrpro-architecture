@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class AdvisorQuery(BaseModel):
@@ -23,9 +23,9 @@ class Citation(BaseModel):
 
 class AdvisorAnswer(BaseModel):
     summary: str
-    findings: list[str] = []
-    actions: list[str] = []
-    insights: list[str] = []
-    citations: list[Citation] = []
+    findings: list[str] = Field(default_factory=list)
+    actions: list[str] = Field(default_factory=list)
+    insights: list[str] = Field(default_factory=list)
+    citations: list[Citation] = Field(default_factory=list)
     explainability_tag: str = "cpo.v1"
     trace_id: str
