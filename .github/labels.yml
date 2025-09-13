@@ -1,0 +1,59 @@
+- name: bug
+  color: d73a4a
+  description: Defect or regression
+
+- name: enhancement
+  color: a2eeef
+  description: Feature request or improvement
+
+- name: docs
+  color: 0075ca
+  description: Documentation changes
+
+- name: chore
+  color: cfd3d7
+  description: Repo hygiene / tooling
+
+- name: priority/P0
+  color: b60205
+  description: Must-do now, blocks release
+
+- name: priority/P1
+  color: d93f0b
+  description: High priority
+
+- name: priority/P2
+  color: fbca04
+  description: Medium priority
+
+- name: area/ci
+  color: 0e8a16
+  description: CI, QA, automation
+
+- name: area/telemetry
+  color: 1d76db
+  description: Metrics, events, /metrics endpoint
+
+- name: area/eval
+  color: 5319e7
+  description: Evaluation harness & reports
+
+- name: area/docs
+  color: 0b4f6c
+  description: READMEs, guides, ADRs
+
+- name: area/ui
+  color: 5319e7
+  description: UI, theming, components
+
+- name: area/backend
+  color: 0e8a16
+  description: Services, ingestion, exports
+
+- name: good-first-issue
+  color: 7057ff
+  description: Low-risk starter task
+
+- name: blocked
+  color: 000000
+  description: Blocked by dependency or decision
