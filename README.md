@@ -63,10 +63,12 @@ All major repo conventions are documented here. **Read ADR-0004** before startin
 ### 3. Local Validation
 Run:
 ```bash
-python tools/validate_traceability_md.py   --prd=docs/PRD/PRD_v4.0_unified_numbered.md   --arch=docs/Architecture/Architecture_v4.1.md   --ui=docs/UI_Framework/UIFramework_v4.0_unified_numbered.md   --trace=docs/traceability/Traceability_v4.1_prefilled.xlsx   --out=docs/traceability/Traceability_link_check.csv
+make autopatch-traceability   # fuzzy-fix legacy rows (skips PR-2)
+make validate-traceability   # generate Traceability_link_check.csv
 ```
 
-Check `Traceability_link_check.csv` for mismatches.
+Both scripts autodiscover the latest PRD, Architecture and UI spec files.
+Check `Traceability_link_check.csv` for remaining mismatches.
 
 ### 4. Continuous Integration
 - Every PR triggers `.github/workflows/traceability-check.yml`.

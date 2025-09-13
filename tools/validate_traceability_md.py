@@ -1,46 +1,28 @@
 #!/usr/bin/env python3
-import re
+"""Traceability validator with spec autodiscovery."""
+
 import sys
-import pandas as pd
 from pathlib import Path
 
-def load_md_sections(md_path: Path):
-    """
-    Read a Markdown file and return a set of numbered headings like:
-      # 1 Title
-      ## 1.1 Subtitle
-      ### 1.1.1 Sub-Subtitle
-    Returns: (sections_set, titles_dict)
-    """
-    sections, titles = set(), {}
-    if not md_path or not md_path.exists():
-        return sections, titles
-    text = md_path.read_text(encoding="utf-8", errors="ignore")
-    for line in text.splitlines():
-        m = re.match(r"^\s*#{1,6}\s+((\d+)(?:\.\d+)*)\s+(.+?)\s*$", line)
-        if m:
-            num = m.group(1).strip()
-            title = m.group(3).strip()
-            sections.add(num)
-            titles[num] = title
-    return sections, titles
+import pandas as pd
 
-def parse_ref_number(cell: str):
-    """Extract '§X[.Y]' section number from a reference cell."""
-    if not isinstance(cell, str):
-        return None
-    m = re.search(r"§\s*([\d]+(?:\.[\d]+)*)", cell)
-    return m.group(1) if m else None
+from traceability_utils import (
+    discover_spec_files,
+    load_md_sections,
+    parse_ref_number,
+)
 
 def main():
     repo_root = Path(".").resolve()
 
-    # Defaults (paths can be overridden via CLI flags)
-    prd_md  = repo_root / "docs/PRD/PRD_v4.0_unified_numbered.md"
-    arch_md = repo_root / "docs/Architecture/Architecture_v4.1.md"
-    ui_md   = repo_root / "docs/UI_Framework/UIFramework_v4.0_unified_numbered.md"
+    # Defaults (paths can be overridden via CLI flags). Autodiscover spec files
+    specs = discover_spec_files(repo_root)
+    prd_md = specs["prd"] or repo_root / "docs/PRD/PRD_v4.0_unified_numbered.md"
+    arch_md = specs["arch"] or repo_root / "docs/Architecture/Architecture_v4.1.md"
+    ui_md = specs["ui"] or repo_root / "docs/UI_Framework/UIFramework_v4.0_unified_numbered.md"
+
     trace_xlsx = repo_root / "docs/traceability/Traceability_v4.1_completed_with_notes.xlsx"
-    out_csv    = repo_root / "docs/traceability/Traceability_link_check.csv"
+    out_csv = repo_root / "docs/traceability/Traceability_link_check.csv"
 
     for arg in sys.argv[1:]:
         if arg.startswith("--prd="):   prd_md  = Path(arg.split("=",1)[1]).resolve()
