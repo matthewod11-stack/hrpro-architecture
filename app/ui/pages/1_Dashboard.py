@@ -1,12 +1,14 @@
-import streamlit as st
+import time
+
 import pandas as pd
 import requests
-import time
-from app.utils import telemetry
+import streamlit as st
+
 from app.ui.components.retry_banner import retry_banner
 from app.ui.components.toast import toast_success
 from app.ui.theme import get_palette
 from app.ui.tokens import set_mode
+from app.utils import telemetry
 
 API_URL = "http://127.0.0.1:8000/v1/data/charts"
 

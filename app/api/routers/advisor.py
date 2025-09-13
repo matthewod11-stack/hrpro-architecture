@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 import json
+from typing import Any
 import uuid
-from typing import Iterator, Dict, Any
 
 from fastapi import APIRouter
 from starlette.responses import StreamingResponse
@@ -13,9 +14,9 @@ from app.services.advisor_orchestrator import stream_advisor_answer
 router = APIRouter()
 
 
-def _sse_frame(obj: Dict[str, Any]) -> bytes:
+def _sse_frame(obj: dict[str, Any]) -> bytes:
     """Encode a Python object as an SSE data frame."""
-    return f"data: {json.dumps(obj, ensure_ascii=False)}\n\n".encode("utf-8")
+    return f"data: {json.dumps(obj, ensure_ascii=False)}\n\n".encode()
 
 
 @router.post("/v1/advisor/answer")

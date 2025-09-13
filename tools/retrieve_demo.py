@@ -1,5 +1,6 @@
 import argparse
 import json
+
 from app.retrieval.adapter import retrieve
 
 if __name__ == "__main__":

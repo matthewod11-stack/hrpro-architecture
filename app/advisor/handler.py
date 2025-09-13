@@ -1,12 +1,14 @@
+import json
+import os
+from pathlib import Path
+import time
+
 from fastapi import APIRouter
 from pydantic import BaseModel
+
 from app.advisor.prompts import get_cpo_system_prompt
-from app.retrieval.adapter import retrieve
 from app.retrieval import ollama_client
-import os
-import time
-import json
-from pathlib import Path
+from app.retrieval.adapter import retrieve
 
 router = APIRouter()
 

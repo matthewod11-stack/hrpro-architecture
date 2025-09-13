@@ -11,8 +11,8 @@ Feature, PRD Reference, Arch Reference, UI Reference, Status
 
 import argparse
 import csv
-import re
 from pathlib import Path
+import re
 
 import openpyxl
 
@@ -39,12 +39,14 @@ def load_matrix(xlsx_path: Path, sheet_name: str = "Matrix"):
     for row in ws.iter_rows(min_row=2, values_only=True):
         if not any(row):
             continue
-        rows.append({
-            "feature": row[0],
-            "prd": str(row[3]) if row[3] else "",
-            "arch": str(row[4]) if row[4] else "",
-            "ui": str(row[5]) if row[5] else "",
-        })
+        rows.append(
+            {
+                "feature": row[0],
+                "prd": str(row[3]) if row[3] else "",
+                "arch": str(row[4]) if row[4] else "",
+                "ui": str(row[5]) if row[5] else "",
+            }
+        )
     return rows
 
 
@@ -59,13 +61,15 @@ def validate(rows, prd_anchors, arch_anchors, ui_anchors):
             status.append("ARCH MISSING")
         if r["ui"] and not any(a in r["ui"] for a in ui_anchors):
             status.append("UI MISSING")
-        results.append({
-            "feature": r["feature"],
-            "prd": r["prd"],
-            "arch": r["arch"],
-            "ui": r["ui"],
-            "status": "OK" if not status else "; ".join(status)
-        })
+        results.append(
+            {
+                "feature": r["feature"],
+                "prd": r["prd"],
+                "arch": r["arch"],
+                "ui": r["ui"],
+                "status": "OK" if not status else "; ".join(status),
+            }
+        )
     return results
 
 
@@ -89,7 +93,9 @@ def main():
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["feature", "prd", "arch", "ui", "status"])
+        writer = csv.DictWriter(
+            f, fieldnames=["feature", "prd", "arch", "ui", "status"]
+        )
         writer.writeheader()
         writer.writerows(results)
 

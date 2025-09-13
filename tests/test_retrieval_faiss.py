@@ -3,7 +3,7 @@ import pytest
 pytest.importorskip("sklearn")
 pytest.importorskip("scipy")
 
-from app.retrieval.adapter import retrieve, _load
+from app.retrieval.adapter import _load, retrieve
 
 
 def test_faiss_index_loads():
@@ -21,8 +21,8 @@ def test_retrieve_design_tokens():
 
 
 def test_eval_runner():
-    import subprocess
     import os
+    import subprocess
 
     subprocess.run(["python", "tools/eval_retrieval.py"], check=True)
     assert os.path.exists("evals/retrieval_eval_report.csv")

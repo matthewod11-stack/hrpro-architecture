@@ -1,8 +1,9 @@
-import json
 import csv
-from app.retrieval.adapter import retrieve
-from pathlib import Path
 from datetime import datetime
+import json
+from pathlib import Path
+
+from app.retrieval.adapter import retrieve
 
 GOLDEN_PATH = Path("evals/golden_qna.jsonl")
 REPORT_PATH = Path("evals/retrieval_eval_report.csv")
@@ -62,7 +63,7 @@ for g in goldens:
     matched = []
     for exp in g["expected_sections"]:
         exp_norm = norm_anchor(exp)
-        for idx, (ret, score) in enumerate(zip(returned_anchors, scores)):
+        for idx, (ret, score) in enumerate(zip(returned_anchors, scores, strict=False)):
             # ADR ancestor match
             if ancestor_match(exp_norm, ret):
                 found = True

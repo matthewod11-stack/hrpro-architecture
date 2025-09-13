@@ -1,5 +1,5 @@
 # app/api/routers/charts.py
-from typing import List, Literal
+from typing import Literal
 
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
@@ -20,14 +20,14 @@ class SeriesPoint(BaseModel):
 
 class ChartSeries(BaseModel):
     name: str
-    points: List[SeriesPoint]
+    points: list[SeriesPoint]
 
 
 class ChartResponse(BaseModel):
     chart: str
     title: str
-    series: List[ChartSeries]
-    legend: List[str]
+    series: list[ChartSeries]
+    legend: list[str]
     bins: dict | None = None
     insights_placeholder: bool = True
 

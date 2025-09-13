@@ -1,7 +1,8 @@
 import streamlit as st
-from app.ui.session_utils import set_trace_id, get_trace_id
+
 from app.ui.components.retry_banner import retry_banner
-from app.ui.components.toast import toast_success, toast_error
+from app.ui.components.toast import toast_error, toast_success
+from app.ui.session_utils import get_trace_id, set_trace_id
 from app.ui.theme import get_palette
 from app.ui.tokens import set_mode
 
