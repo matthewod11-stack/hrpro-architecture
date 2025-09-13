@@ -50,3 +50,15 @@ kb-clean:
 
 retrieve-smoke:
 	@bash tools/retrieval_smoke.sh
+
+.PHONY: validate-traceability autopatch-traceability
+validate-traceability:
+	python tools/validate_traceability_md.py \
+		--prd=docs/PRD/PRD_v4.0_unified_numbered.md \
+		--arch=docs/Architecture/Architecture_v4.1.md \
+		--ui=docs/UI_Framework/UIFramework_v4.0_unified_numbered.md \
+		--trace=docs/traceability/Traceability_v4.1_prefilled.xlsx \
+		--out=docs/traceability/Traceability_link_check.csv
+
+autopatch-traceability:
+	python tools/traceability_add.py --req "$(REQ)" --arch "$(ARCH)" --ui "$(UI)"
