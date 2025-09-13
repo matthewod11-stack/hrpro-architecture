@@ -61,9 +61,6 @@ elif step == "Export":
         toast_success("Export succeeded!")
     except Exception as e:
         retry_banner(f"Export failed: {e}", lambda: toast_error("Retrying Export..."))
-    st.write(f"Payload for export: {payload}")
-    st.button("Export Plan")
-    st.success("Export available (stub)")
 
 st.markdown("#### Quick Actions")
 actions = [
