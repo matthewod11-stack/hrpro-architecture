@@ -1,26 +1,6 @@
 import streamlit as st
 
-from ui.state import route_to_advisor
-
-
-def render_tiles():
-    st.write("### Modules")
-    c1, c2 = st.columns(2)
-    with c1:
-        if st.button("Advisor", use_container_width=True):
-            route_to_advisor(None)
-        st.caption("Ask your CPO. Streaming answers with citations.")
-    with c2:
-        st.button("Dashboards (coming soon)", disabled=True, use_container_width=True)
-        st.caption("eNPS & Attrition.")
-    with c1:
-        st.button("Builders (coming soon)", disabled=True, use_container_width=True)
-        st.caption("30/60/90, PIP.")
-    with c2:
-        st.button("Exports (coming soon)", disabled=True, use_container_width=True)
-    st.caption("Branded PDFs/CSVs.")
-
-
+from app.ui.state import route_to_advisor
 from app.ui.tokens import BG_CARD, BORDER_MID, FG_MUTED, RADIUS_MD, SPACE_MD, SPACE_SM
 
 
@@ -29,8 +9,7 @@ def render_tiles():
         {
             "title": "Advisor",
             "desc": "Ask your CPO. Streaming answers with citations.",
-            "action": lambda: st.session_state.update({"seed_query": ""})
-            or st.switch_page("ui/pages/01_Advisor.py"),
+            "action": lambda: route_to_advisor(None),
             "enabled": True,
         },
         {
@@ -55,7 +34,10 @@ def render_tiles():
     cols = st.columns(2)
     for i, tile in enumerate(tiles):
         with cols[i % 2]:
-            style = f"background:{BG_CARD};border-radius:{RADIUS_MD}px;border:1px solid {BORDER_MID};padding:{SPACE_MD}px;margin-bottom:{SPACE_SM}px;"
+            style = (
+                f"background:{BG_CARD};border-radius:{RADIUS_MD}px;border:1px solid {BORDER_MID};"
+                f"padding:{SPACE_MD}px;margin-bottom:{SPACE_SM}px;"
+            )
             st.markdown(
                 f"<div style='{style}'>"
                 f"<b>{tile['title']}</b><br>"
