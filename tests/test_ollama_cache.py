@@ -1,4 +1,10 @@
+import pytest
+
+pytest.importorskip("sklearn")
+pytest.importorskip("scipy")
+
 import numpy as np
+
 from app.retrieval import ollama_client
 
 

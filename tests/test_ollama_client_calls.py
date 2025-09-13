@@ -1,3 +1,8 @@
+import pytest
+
+pytest.importorskip("sklearn")
+pytest.importorskip("scipy")
+
 from app.retrieval import ollama_client
 
 

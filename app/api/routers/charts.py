@@ -1,14 +1,15 @@
 # app/api/routers/charts.py
+from typing import Literal
+
 from fastapi import APIRouter
-from pydantic import BaseModel
-from typing import List, Literal
+from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/v1/data", tags=["charts"])
 
 
 class ChartRequest(BaseModel):
     chart: Literal["enps", "nine_box"]
-    params: dict = {}
+    params: dict = Field(default_factory=dict)
 
 
 class SeriesPoint(BaseModel):
@@ -19,14 +20,14 @@ class SeriesPoint(BaseModel):
 
 class ChartSeries(BaseModel):
     name: str
-    points: List[SeriesPoint]
+    points: list[SeriesPoint]
 
 
 class ChartResponse(BaseModel):
     chart: str
     title: str
-    series: List[ChartSeries]
-    legend: List[str]
+    series: list[ChartSeries]
+    legend: list[str]
     bins: dict | None = None
     insights_placeholder: bool = True
 

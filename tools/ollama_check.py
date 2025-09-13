@@ -1,6 +1,7 @@
+import sys
+
 import requests
 import yaml
-import sys
 
 with open("config/retrieval.yaml") as f:
     cfg = yaml.safe_load(f)
