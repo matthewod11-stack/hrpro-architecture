@@ -1,10 +1,11 @@
+from datetime import datetime
 import json
-import joblib
 from pathlib import Path
+
+import joblib
+from scipy import sparse
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
-from scipy import sparse
-from datetime import datetime
 
 CORPUS_PATH = Path("knowledge_base/corpus.jsonl")
 INDEX_DIR = Path("versions/index/")

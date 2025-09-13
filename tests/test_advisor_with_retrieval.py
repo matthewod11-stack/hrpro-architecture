@@ -3,10 +3,12 @@ import pytest
 pytest.importorskip("sklearn")
 pytest.importorskip("scipy")
 
-from fastapi.testclient import TestClient
-from app.api.main import app
 import json
 from pathlib import Path
+
+from fastapi.testclient import TestClient
+
+from app.api.main import app
 
 
 def get_telemetry_lines():

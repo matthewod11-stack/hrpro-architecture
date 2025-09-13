@@ -1,9 +1,9 @@
-import sys
-import re
-import unicodedata
+import argparse
 import json
 from pathlib import Path
-import argparse
+import re
+import sys
+import unicodedata
 
 RE_NUM = re.compile(r"^#{1,6}\s+(\d+(?:\.\d+)*)\s+(.*)\s*$")
 RE_ADR_TOP = re.compile(r"^#{1,6}\s+ADR-(\d{4,5})[:\s-]+(.*)\s*$", re.IGNORECASE)

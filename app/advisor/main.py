@@ -9,7 +9,6 @@ from fastapi.responses import JSONResponse, StreamingResponse
 
 from app.api.routers import advisor, charts
 
-
 app = FastAPI(title="HRPro Advisor API")
 
 # include routers after app creation
