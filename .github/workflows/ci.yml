@@ -7,6 +7,14 @@ on:
   pull_request:
 
 jobs:
+  # Cancel in-progress runs for same ref
+  # Helps keep CI responsive during rapid pushes
+  # Uses workflow+ref as the concurrency key
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
   lint:
     name: Lint (ruff, black)
     runs-on: ubuntu-latest

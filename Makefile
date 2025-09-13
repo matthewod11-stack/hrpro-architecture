@@ -1,9 +1,13 @@
- .PHONY: demo-theme test-contracts boot stop eval-offline \
+ .PHONY: help demo-theme test-contracts boot stop eval-offline \
          trace-normalize waive-legacy trace-ci trace-force trace-legacy-autopatch \
          ui-canon trace-legacy-report trace-legacy-fix trace-pr2-fail trace-fix trace-pr2 \
          setup-dev format lint hooks demo kb-sync kb-build kb-index kb-validate kb-reindex kb-demo \
          setup serve-ollama pull-model api api-run ui demo-smoke kb-clean retrieve-smoke \
          launcher validate-traceability autopatch-traceability
+
+# Help
+help: ## Show available make targets
+	@grep -E '^[a-zA-Z0-9_-]+:.*?##' $(MAKEFILE_LIST) | awk 'BEGIN {FS=":.*?##"} {printf "\033[36m%-24s\033[0m %s\n", $$1, $$2}' | sort
 
 # Demo and testing utilities
 demo-theme:
@@ -72,17 +76,17 @@ trace-pr2:
 	@python tools/traceability_update_pr2.py --validate && echo "Traceability PR2 OK"
 
 # Dev setup and linting
-setup-dev:
+setup-dev: ## Install dev tools and pre-commit hooks
 	pip install -r requirements-dev.txt
 	pre-commit install
 
-format:
+format: ## Format code with Black
 	black .
 
-lint:
+lint: ## Lint and fix with Ruff
 	ruff check --fix .
 
-hooks:
+hooks: ## Run all pre-commit hooks
 	pre-commit run --all-files
 
 # Smoke demo
@@ -90,22 +94,22 @@ demo-smoke:
 	@python tools/smoke_e2e.py
 
 # Knowledge base workflow
-kb-sync:
+kb-sync: ## Sync knowledge base from external sources
 	@echo "Syncing knowledge base..."
 	@python tools/sync_repo_kb.py
 
 kb-reindex: kb-sync kb-build kb-index
 
-kb-build:
+kb-build: ## Build KB corpus
 	@python knowledge_base/build_corpus.py
 
-kb-index:
+kb-index: ## Build KB index
 	@python knowledge_base/index_corpus.py
 
-kb-validate:
+kb-validate: ## Validate traceability links
 	@python tools/validate_traceability.py
 
-kb-demo:
+kb-demo: ## Run retrieval demo
 	@python tools/retrieve_demo.py --q "Summarize our traceability & validation gates."
 
 kb-clean:
@@ -117,7 +121,7 @@ retrieve-smoke:
 	@bash tools/retrieval_smoke.sh
 
 # Local run targets
-setup:
+setup: ## Create venv and install requirements
 	@echo "Creating .venv and installing requirements..."
 	@if [ ! -d ".venv" ]; then python3 -m venv .venv; fi
 	@. .venv/bin/activate && pip install --upgrade pip
@@ -132,7 +136,7 @@ pull-model:
 	@echo "Pulling llama3.1:8b model..."
 	@ollama pull llama3.1:8b
 
-api:
+api: ## Run FastAPI backend (dev)
 	@echo "Starting FastAPI backend (uvicorn)..."
 	@export PYTHONPATH=. ; \
 	uvicorn app.api.main:app --reload --port 8000
@@ -142,13 +146,13 @@ api-run:
 	@export PYTHONPATH=. ; \
 	uvicorn app.api.main:app --reload --port 8000
 
-ui:
+ui: ## Run Streamlit UI (dev)
 	@echo "Starting Streamlit UI..."
 	@(streamlit run app/ui/Home.py --server.port 8501 || \
 	  streamlit run app/ui/pages/00_Landing.py --server.port 8501)
 
 # Mac launcher to open separate terminals and browser
-launcher:
+launcher: ## Mac: open API & UI in Terminal windows
 	@echo "Setting up Python environment..."
 	@if [ ! -d ".venv" ]; then python3 -m venv .venv; fi
 	@. .venv/bin/activate && pip install --upgrade pip
@@ -163,7 +167,7 @@ launcher:
 	@open "http://localhost:8501"
 
 # Traceability checks
-validate-traceability:
+validate-traceability: ## Validate traceability matrix references
 	python tools/validate_traceability_md.py \
 		--prd=docs/PRD/PRD_v4.0_unified_numbered.md \
 		--arch=docs/Architecture/Architecture_v4.1_unified.md \
