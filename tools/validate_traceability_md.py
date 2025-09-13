@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
+import argparse
 import re
-import sys
 import pandas as pd
 from pathlib import Path
 
@@ -35,43 +35,97 @@ def parse_ref_number(cell: str):
     return m.group(1) if m else None
 
 
+def discover_one(root: Path, patterns):
+    for pattern in patterns:
+        matches = sorted(root.glob(pattern))
+        if matches:
+            return matches[0]
+    return None
+
+
+def autodiscover_paths(root: Path):
+    return {
+        "prd": discover_one(
+            root,
+            [
+                "docs/PRD/PRD_v4.0_unified_numbered.md",
+                "docs/PRD/PRD_v*.md",
+            ],
+        ),
+        "arch": discover_one(
+            root,
+            [
+                "docs/Architecture/Architecture_v4.1.md",
+                "docs/Architecture/Architecture_v*.md",
+            ],
+        ),
+        "ui": discover_one(
+            root,
+            [
+                "docs/UI_Framework/UIFramework_v4.0_unified_numbered.md",
+                "docs/UI_Framework/UIFramework_v*.md",
+            ],
+        ),
+        "trace": discover_one(
+            root,
+            [
+                "docs/traceability/Traceability_v4.1_completed_with_notes.xlsx",
+                "docs/traceability/Traceability_v*.xlsx",
+            ],
+        ),
+        "out": root / "docs/traceability/Traceability_link_check.csv",
+    }
+
+
 def main():
     repo_root = Path(".").resolve()
+    defaults = autodiscover_paths(repo_root)
 
-    # Defaults (paths can be overridden via CLI flags)
-    prd_md = repo_root / "docs/PRD/PRD_v4.0_unified_numbered.md"
-    arch_md = repo_root / "docs/Architecture/Architecture_v4.1.md"
-    ui_md = repo_root / "docs/UI_Framework/UIFramework_v4.0_unified_numbered.md"
-    trace_xlsx = (
-        repo_root / "docs/traceability/Traceability_v4.1_completed_with_notes.xlsx"
+    parser = argparse.ArgumentParser(
+        description="Validate traceability matrix references against documentation"
     )
-    out_csv = repo_root / "docs/traceability/Traceability_link_check.csv"
+    parser.add_argument("--prd", type=Path, default=defaults["prd"], help="PRD markdown")
+    parser.add_argument(
+        "--arch", type=Path, default=defaults["arch"], help="Architecture markdown"
+    )
+    parser.add_argument(
+        "--ui",
+        type=Path,
+        default=defaults["ui"],
+        help="UI markdown (optional)",
+    )
+    parser.add_argument(
+        "--trace",
+        type=Path,
+        default=defaults["trace"],
+        help="Traceability Excel sheet",
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=defaults["out"],
+        help="Output CSV path",
+    )
+    args = parser.parse_args()
 
-    for arg in sys.argv[1:]:
-        if arg.startswith("--prd="):
-            if arg.startswith("--prd="):
-                prd_md = Path(arg.split("=", 1)[1]).resolve()
-            elif arg.startswith("--arch="):
-                arch_md = Path(arg.split("=", 1)[1]).resolve()
-            elif arg.startswith("--ui="):
-                ui_md = Path(arg.split("=", 1)[1]).resolve()
-            elif arg.startswith("--trace="):
-                trace_xlsx = Path(arg.split("=", 1)[1]).resolve()
-            elif arg.startswith("--out="):
-                out_csv = Path(arg.split("=", 1)[1]).resolve()
-        elif arg.startswith("--trace="):
-            trace_xlsx = Path(arg.split("=", 1)[1]).resolve()
-        elif arg.startswith("--out="):
-            out_csv = Path(arg.split("=", 1)[1]).resolve()
+    prd_md = args.prd
+    arch_md = args.arch
+    ui_md = args.ui
+    trace_xlsx = args.trace
+    out_csv = args.out
 
     print(f"[INFO] PRD (md):  {prd_md}")
     print(f"[INFO] Arch (md): {arch_md}")
-    print(f"[INFO] UI  (md):  {ui_md if ui_md.exists() else '(missing or skipped)'}")
+    print(
+        f"[INFO] UI  (md):  {ui_md if ui_md and ui_md.exists() else '(missing or skipped)'}"
+    )
     print(f"[INFO] Traceability: {trace_xlsx}")
 
     prd_sections, prd_titles = load_md_sections(prd_md)
     arch_sections, arch_titles = load_md_sections(arch_md)
-    ui_sections, ui_titles = load_md_sections(ui_md) if ui_md.exists() else (set(), {})
+    ui_sections, ui_titles = (
+        load_md_sections(ui_md) if ui_md and ui_md.exists() else (set(), {})
+    )
 
     # Load matrix
     df = pd.read_excel(trace_xlsx)
