@@ -1,3 +1,17 @@
+.PHONY: demo-theme
+demo-theme:
+	python ui/demo_theme.py
+.PHONY: test-contracts
+test-contracts:
+	pytest -q -m contract
+.PHONY: boot stop eval-offline
+boot:
+	bash scripts/dev_boot.sh
+stop:
+	bash scripts/dev_stop.sh
+eval-offline:
+	python -m eval.runner --mode offline --out eval/report.json && \
+	python -m eval.report --in eval/report.json --out eval/report.md
 .PHONY: trace-normalize
 trace-normalize:
 	@python tools/traceability_normalize_matrix.py || true
@@ -127,6 +141,11 @@ demo:
 	@osascript -e 'tell application "Terminal" to do script "cd $(PWD) && make ui"' &
 	@echo "Opening http://localhost:8501 in browser..."
 	@open "http://localhost:8501"
+
+.PHONY: kb-sync
+kb-sync:
+	@echo "Syncing knowledge base..."
+	@python tools/sync_repo_kb.py
 	    source .venv/bin/activate && pip install -r requirements.txt
 
 kb-sync:
