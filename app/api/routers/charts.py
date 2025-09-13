@@ -1,6 +1,6 @@
 # app/api/routers/charts.py
 from fastapi import APIRouter
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Literal
 
 router = APIRouter(prefix="/v1/data", tags=["charts"])
@@ -8,7 +8,7 @@ router = APIRouter(prefix="/v1/data", tags=["charts"])
 
 class ChartRequest(BaseModel):
     chart: Literal["enps", "nine_box"]
-    params: dict = {}
+    params: dict = Field(default_factory=dict)
 
 
 class SeriesPoint(BaseModel):
