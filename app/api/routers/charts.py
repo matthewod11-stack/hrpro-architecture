@@ -1,7 +1,8 @@
 # app/api/routers/charts.py
+from typing import List, Literal
+
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
-from typing import List, Literal
 
 router = APIRouter(prefix="/v1/data", tags=["charts"])
 
