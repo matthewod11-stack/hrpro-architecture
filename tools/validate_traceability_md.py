@@ -1,279 +1,242 @@
 #!/usr/bin/env python3
+"""
+validate_traceability_md.py
+
+Validate that references in the traceability matrix map to real sections
+in the canonical Markdown docs (PRD, Architecture, UI Framework).
+
+- Extracts anchors from numbered Markdown headings:
+    "# 1", "## 1.2", "### 1.2.3" -> "§1", "§1.2", "§1.2.3"
+- Reads an Excel matrix (default sheet "Matrix") and looks for columns:
+    "Feature Name", "PRD Reference", "Arch Reference", "UI Reference"
+  Header names are matched case-insensitively and loosely. If headers
+  are missing, it falls back to indices [0, 3, 4, 5].
+- For each row, checks if any "§X(.Y)*" token in the reference cell
+  is present in the extracted anchor set from the corresponding doc.
+
+Outputs CSV with columns:
+    feature, prd, arch, ui, status
+
+Exit code:
+    0 -> All rows OK
+    1 -> Any row has a missing reference
+"""
+
+from __future__ import annotations
+
+import argparse
+from collections.abc import Sequence
+import csv
+from dataclasses import dataclass
 from pathlib import Path
 import re
 import sys
 
-import pandas as pd
+import openpyxl
+
+# Matches numbered headings like: "# 1", "## 1.2", "### 1.2.3 Title"
+ANCHOR_RE = re.compile(r"^#{1,6}\s+(\d+(?:\.\d+)*)\b")
+
+# Extract tokens like "§1", "§1.2", "§12.3.4" from a freeform cell
+SECTION_TOKEN_RE = re.compile(r"§\d+(?:\.\d+)*")
 
 
-def load_md_sections(md_path: Path):
+@dataclass
+class MatrixRow:
+    feature: str
+    prd: str
+    arch: str
+    ui: str
+
+
+def _to_str(x: object) -> str:
+    return ("" if x is None else str(x)).strip()
+
+
+def extract_anchors(md_path: Path) -> set[str]:
+    """Extract section anchors (e.g., '§1.2.3') from a numbered Markdown doc."""
+    anchors: set[str] = set()
+    with md_path.open(encoding="utf-8") as f:
+        for raw in f:
+            line = raw.strip()
+            m = ANCHOR_RE.match(line)
+            if m:
+                anchors.add("§" + m.group(1))
+    return anchors
+
+
+def _safe_sheet(wb, name: str):
+    """Return the named sheet if present; else the first sheet."""
+    return wb[name] if name in wb.sheetnames else wb[wb.sheetnames[0]]
+
+
+def _header_index_map(headers: Sequence[str]) -> dict[str, int]:
     """
-    Read a Markdown file and return a set of numbered headings like:
-      # 1 Title
-      ## 1.1 Subtitle
-      ### 1.1.1 Sub-Subtitle
-    Returns: (sections_set, titles_dict)
+    Build a case/format-insensitive index map for common columns.
+    Accept many variants to be resilient to header changes.
     """
-    sections, titles = set(), {}
-    if not md_path or not md_path.exists():
-        return sections, titles
-    text = md_path.read_text(encoding="utf-8", errors="ignore")
-    for line in text.splitlines():
-        m = re.match(r"^\s*#{1,6}\s+((\d+)(?:\.\d+)*)\s+(.+?)\s*$", line)
-        if m:
-            num = m.group(1).strip()
-            title = m.group(3).strip()
-            sections.add(num)
-            titles[num] = title
-    return sections, titles
+    norm = [h.strip().lower().replace("_", " ") for h in headers]
 
-
-def parse_ref_number(cell: str):
-    """Extract '§X[.Y]' section number from a reference cell."""
-    if not isinstance(cell, str):
+    def find_one(cands: Sequence[str]) -> int | None:
+        for i, h in enumerate(norm):
+            for c in cands:
+                if c in h:
+                    return i
         return None
-    m = re.search(r"§\s*([\d]+(?:\.[\d]+)*)", cell)
-    return m.group(1) if m else None
+
+    idx_feature = find_one(["feature name", "feature", "name"])
+    idx_prd = find_one(["prd reference", "prd", "product requirements"])
+    idx_arch = find_one(["arch reference", "architecture mapping", "arch"])
+    idx_ui = find_one(["ui reference", "ui framework", "ui"])
+
+    return {
+        "feature": -1 if idx_feature is None else idx_feature,
+        "prd": -1 if idx_prd is None else idx_prd,
+        "arch": -1 if idx_arch is None else idx_arch,
+        "ui": -1 if idx_ui is None else idx_ui,
+    }
 
 
-def main():
-    repo_root = Path(".").resolve()
+def _fallback_indices() -> dict[str, int]:
+    """
+    Fallback to legacy positional layout:
+      0: Feature Name
+      3: PRD Reference
+      4: Arch Reference
+      5: UI Reference
+    """
+    return {"feature": 0, "prd": 3, "arch": 4, "ui": 5}
 
-    # Defaults (paths can be overridden via CLI flags)
-    prd_md = repo_root / "docs/PRD/PRD_v4.0_unified_numbered.md"
-    arch_md = repo_root / "docs/Architecture/Architecture_v4.1.md"
-    ui_md = repo_root / "docs/UI_Framework/UIFramework_v4.0_unified_numbered.md"
-    trace_xlsx = (
-        repo_root / "docs/traceability/Traceability_v4.1_completed_with_notes.xlsx"
-    )
-    out_csv = repo_root / "docs/traceability/Traceability_link_check.csv"
 
-    for arg in sys.argv[1:]:
-        if arg.startswith("--prd="):
-            if arg.startswith("--prd="):
-                prd_md = Path(arg.split("=", 1)[1]).resolve()
-            elif arg.startswith("--arch="):
-                arch_md = Path(arg.split("=", 1)[1]).resolve()
-            elif arg.startswith("--ui="):
-                ui_md = Path(arg.split("=", 1)[1]).resolve()
-            elif arg.startswith("--trace="):
-                trace_xlsx = Path(arg.split("=", 1)[1]).resolve()
-            elif arg.startswith("--out="):
-                out_csv = Path(arg.split("=", 1)[1]).resolve()
-        elif arg.startswith("--trace="):
-            trace_xlsx = Path(arg.split("=", 1)[1]).resolve()
-        elif arg.startswith("--out="):
-            out_csv = Path(arg.split("=", 1)[1]).resolve()
+def load_matrix(xlsx_path: Path, sheet_name: str = "Matrix") -> list[MatrixRow]:
+    """
+    Load rows from the matrix spreadsheet. Tries header-based mapping first,
+    then falls back to positional indices if headers are missing/unknown.
+    """
+    wb = openpyxl.load_workbook(xlsx_path, data_only=True)
+    ws = _safe_sheet(wb, sheet_name)
 
-    print(f"[INFO] PRD (md):  {prd_md}")
-    print(f"[INFO] Arch (md): {arch_md}")
-    print(f"[INFO] UI  (md):  {ui_md if ui_md.exists() else '(missing or skipped)'}")
-    print(f"[INFO] Traceability: {trace_xlsx}")
+    rows: list[MatrixRow] = []
 
-    prd_sections, prd_titles = load_md_sections(prd_md)
-    arch_sections, arch_titles = load_md_sections(arch_md)
-    ui_sections, ui_titles = load_md_sections(ui_md) if ui_md.exists() else (set(), {})
+    # Read headers in the first row (if present)
+    header_row = None
+    for row in ws.iter_rows(min_row=1, max_row=1, values_only=True):
+        header_row = ["" if x is None else str(x) for x in row]
+        break
 
-    # Load matrix
-    df = pd.read_excel(trace_xlsx)
+    if header_row:
+        idx_map = _header_index_map(header_row)
+    else:
+        idx_map = _fallback_indices()
 
-    # Column names (robust to slight variations)
-    col_flow = "UI Element / Flow"
-    col_prd = next(
-        (c for c in df.columns if str(c).strip().lower().startswith("prd")),
-        "PRD Requirement (short)",
-    )
-    col_arch = next(
-        (c for c in df.columns if "arch" in str(c).strip().lower()),
-        "Architecture Mapping",
-    )
-    col_ui = next(
-        (c for c in df.columns if str(c).strip().lower().startswith("ui")), None
-    )  # optional
+    # If headers weren't helpful, fall back
+    if any(idx_map[k] < 0 for k in ("feature", "prd", "arch", "ui")):
+        idx_map = _fallback_indices()
 
-    rows = []
-    for _, row in df.iterrows():
-        rid = row.get("ID", "")
-        flow = row.get(col_flow, "")
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        if not row or not any(row):
+            continue
 
-        prd_ref = str(row.get(col_prd, "") or "")
-        arch_ref = str(row.get(col_arch, "") or "")
-        ui_ref = str(row.get(col_ui, "") or "") if col_ui else ""
-
-        prd_num = parse_ref_number(prd_ref)
-        arch_num = parse_ref_number(arch_ref)
-        ui_num = parse_ref_number(ui_ref) if ui_ref else None
-
-        prd_ok = (prd_num in prd_sections) if prd_num else False
-        arch_ok = (arch_num in arch_sections) if arch_num else False
-        ui_ok = (
-            (ui_num in ui_sections) if ui_num else (False if col_ui else True)
-        )  # if no UI col, treat as pass
-
-        # Aggregate status
-        if prd_ok and arch_ok and ui_ok:
-            status = "OK"
-        else:
-            parts = []
-            if not prd_ok:
-                parts.append("PRD")
-            if not arch_ok:
-                parts.append("ARCH")
-            if col_ui and not ui_ok:
-                parts.append("UI")
-            status = "MISMATCH[" + ",".join(parts) + "]"
-
-        rows.append(
-            {
-                "ID": rid,
-                "Flow": flow,
-                "PRD_Ref": prd_ref,
-                "PRD_Section": prd_num or "",
-                "PRD_found": prd_ok,
-                "Arch_Ref": arch_ref,
-                "Arch_Section": arch_num or "",
-                "Arch_found": arch_ok,
-                "UI_Ref": ui_ref,
-                "UI_Section": ui_num or "",
-                "UI_found": ui_ok if col_ui else "",
-                "Status": status,
-            }
+        feature = (
+            _to_str(row[idx_map["feature"]]) if len(row) > idx_map["feature"] else ""
         )
+        prd = _to_str(row[idx_map["prd"]]) if len(row) > idx_map["prd"] else ""
+        arch = _to_str(row[idx_map["arch"]]) if len(row) > idx_map["arch"] else ""
+        ui = _to_str(row[idx_map["ui"]]) if len(row) > idx_map["ui"] else ""
 
-    out = pd.DataFrame(rows)
-    out.to_csv(out_csv, index=False)
-    print(f"[DONE] Report written: {out_csv}")
+        rows.append(MatrixRow(feature=feature, prd=prd, arch=arch, ui=ui))
+
+    return rows
 
 
-# Helper for tests
-def _write_test_xlsx(path, rows):
-    import openpyxl
+def _tokens_in(blob: str) -> set[str]:
+    """Return all unique '§X(.Y)*' tokens present in the string."""
+    return set(SECTION_TOKEN_RE.findall(blob))
 
-    wb = openpyxl.Workbook()
-    ws = wb.worksheets[0]
-    ws.append(
-        [
-            "ID",
-            "UI Element / Flow",
-            "Other",
-            "PRD Requirement (short)",
-            "Architecture Mapping",
-            "UI Mapping",
-        ]
-    )
+
+def validate(
+    rows: list[MatrixRow],
+    prd_anchors: set[str],
+    arch_anchors: set[str],
+    ui_anchors: set[str],
+) -> list[dict[str, str]]:
+    """
+    Validate each row by checking whether any §-token in each reference cell
+    is present in the corresponding document's anchor set.
+    """
+    results: list[dict[str, str]] = []
     for r in rows:
-        ws.append(
-            [
-                r.get("ID", "1"),
-                r.get("Flow", "Test Flow"),
-                "",  # Other
-                r.get("PRD Ref", ""),
-                r.get("Arch Ref", ""),
-                r.get("UI Ref", ""),
-            ]
-        )
-    wb.save(path)
+        issues: list[str] = []
 
+        prd_tokens = _tokens_in(r.prd)
+        arch_tokens = _tokens_in(r.arch)
+        ui_tokens = _tokens_in(r.ui)
 
-def main(argv=None):
-    import sys
+        if r.prd and not any(t in prd_anchors for t in prd_tokens):
+            issues.append("PRD MISSING")
+        if r.arch and not any(t in arch_anchors for t in arch_tokens):
+            issues.append("ARCH MISSING")
+        if r.ui and not any(t in ui_anchors for t in ui_tokens):
+            issues.append("UI MISSING")
 
-    repo_root = Path(".").resolve()
-
-    prd_md = repo_root / "docs/PRD/PRD_v4.0_unified_numbered.md"
-    arch_md = repo_root / "docs/Architecture/Architecture_v4.1.md"
-    ui_md = repo_root / "docs/UI_Framework/UIFramework_v4.0_unified_numbered.md"
-    trace_xlsx = (
-        repo_root / "docs/traceability/Traceability_v4.1_completed_with_notes.xlsx"
-    )
-    out_csv = repo_root / "docs/traceability/Traceability_link_check.csv"
-
-    args = argv if argv is not None else sys.argv[1:]
-    for arg in args:
-        if arg.startswith("--prd="):
-            prd_md = Path(arg.split("=", 1)[1]).resolve()
-        elif arg.startswith("--arch="):
-            arch_md = Path(arg.split("=", 1)[1]).resolve()
-        elif arg.startswith("--ui="):
-            ui_md = Path(arg.split("=", 1)[1]).resolve()
-        elif arg.startswith("--trace="):
-            trace_xlsx = Path(arg.split("=", 1)[1]).resolve()
-        elif arg.startswith("--out="):
-            out_csv = Path(arg.split("=", 1)[1]).resolve()
-
-    print(f"[INFO] PRD (md):  {prd_md}")
-    print(f"[INFO] Arch (md): {arch_md}")
-    print(f"[INFO] UI  (md):  {ui_md if ui_md.exists() else '(missing or skipped)'}")
-    print(f"[INFO] Traceability: {trace_xlsx}")
-
-    prd_sections, prd_titles = load_md_sections(prd_md)
-    arch_sections, arch_titles = load_md_sections(arch_md)
-    ui_sections, ui_titles = load_md_sections(ui_md) if ui_md.exists() else (set(), {})
-
-    import pandas as pd
-
-    df = pd.read_excel(trace_xlsx)
-
-    col_flow = "UI Element / Flow"
-    col_prd = next(
-        (c for c in df.columns if str(c).strip().lower().startswith("prd")),
-        "PRD Requirement (short)",
-    )
-    col_arch = next(
-        (c for c in df.columns if "arch" in str(c).strip().lower()),
-        "Architecture Mapping",
-    )
-    col_ui = next(
-        (c for c in df.columns if str(c).strip().lower().startswith("ui")), None
-    )
-
-    rows = []
-    for _, row in df.iterrows():
-        rid = row.get("ID", "")
-        flow = row.get(col_flow, "")
-        prd_ref = str(row.get(col_prd, "") or "")
-        arch_ref = str(row.get(col_arch, "") or "")
-        ui_ref = str(row.get(col_ui, "") or "") if col_ui else ""
-        prd_num = parse_ref_number(prd_ref)
-        arch_num = parse_ref_number(arch_ref)
-        ui_num = parse_ref_number(ui_ref) if ui_ref else None
-        prd_ok = (prd_num in prd_sections) if prd_num else False
-        arch_ok = (arch_num in arch_sections) if arch_num else False
-        ui_ok = (ui_num in ui_sections) if ui_num else (False if col_ui else True)
-        if prd_ok and arch_ok and ui_ok:
-            status = "OK"
-        else:
-            parts = []
-            if not prd_ok:
-                parts.append("PRD")
-            if not arch_ok:
-                parts.append("ARCH")
-            if col_ui and not ui_ok:
-                parts.append("UI")
-            status = "MISMATCH[" + ",".join(parts) + "]"
-        rows.append(
+        results.append(
             {
-                "ID": rid,
-                "Flow": flow,
-                "PRD_Ref": prd_ref,
-                "PRD_Section": prd_num or "",
-                "PRD_found": prd_ok,
-                "Arch_Ref": arch_ref,
-                "Arch_Section": arch_num or "",
-                "Arch_found": arch_ok,
-                "UI_Ref": ui_ref,
-                "UI_Section": ui_num or "",
-                "UI_found": ui_ok if col_ui else "",
-                "Status": status,
+                "feature": r.feature,
+                "prd": r.prd,
+                "arch": r.arch,
+                "ui": r.ui,
+                "status": "OK" if not issues else "; ".join(issues),
             }
         )
 
-    out = pd.DataFrame(rows)
-    out.to_csv(out_csv, index=False)
-    print(f"[DONE] Report written: {out_csv}")
-    # Return 0 if all OK, else 1
-    all_ok = all(r["Status"] == "OK" for r in rows)
-    return 0 if all_ok else 1
+    return results
+
+
+def main() -> int:
+    p = argparse.ArgumentParser()
+    p.add_argument("--prd", required=True, help="Path to PRD Markdown")
+    p.add_argument("--arch", required=True, help="Path to Architecture Markdown")
+    p.add_argument("--ui", required=True, help="Path to UI Framework Markdown")
+    p.add_argument("--trace", required=True, help="Path to traceability .xlsx")
+    p.add_argument("--out", required=True, help="CSV output path")
+    p.add_argument(
+        "--sheet",
+        default="Matrix",
+        help='Worksheet name (default: "Matrix")',
+    )
+    args = p.parse_args()
+
+    prd_path = Path(args.prd)
+    arch_path = Path(args.arch)
+    ui_path = Path(args.ui)
+    trace_path = Path(args.trace)
+    out_path = Path(args.out)
+
+    prd_anchors = extract_anchors(prd_path)
+    arch_anchors = extract_anchors(arch_path)
+    ui_anchors = extract_anchors(ui_path)
+
+    rows = load_matrix(trace_path, args.sheet)
+    results = validate(rows, prd_anchors, arch_anchors, ui_anchors)
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with out_path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=["feature", "prd", "arch", "ui", "status"]
+        )
+        writer.writeheader()
+        writer.writerows(results)
+
+    total = len(results)
+    bad = sum(1 for r in results if r["status"] != "OK")
+    ok = total - bad
+    print(
+        f"Validation complete. OK={ok} / TOTAL={total}. "
+        f"Report written to {out_path}"
+    )
+
+    # Exit non-zero if any row is not OK (so CI fails)
+    return 0 if bad == 0 else 1
 
 
 if __name__ == "__main__":
