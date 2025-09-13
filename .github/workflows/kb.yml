@@ -6,6 +6,10 @@ on:
       - "tools/**"
       - ".github/workflows/kb.yml"
   workflow_dispatch: {}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   kb:
     runs-on: ubuntu-latest
