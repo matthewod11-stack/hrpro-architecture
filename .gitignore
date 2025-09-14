@@ -28,3 +28,7 @@ knowledge_base/anchors_index.csv
 versions/index/**
 !versions/index/.keep
 logs/**/*.jsonl
+
+# Local telemetry artifacts
+telemetry/
+last_query.json
