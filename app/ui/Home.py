@@ -5,8 +5,9 @@ import json
 import os
 import time
 
-import requests
 import streamlit as st
+
+from app.ui.components.sse import stream_sse
 
 # ----- Page setup -----
 st.set_page_config(page_title="HRPro", layout="wide")
@@ -32,29 +33,19 @@ def log_event(event: str, payload: dict):
         f.write(json.dumps(rec) + "\n")
 
 
-# ----- SSE client (no external deps) -----
+# ----- SSE client -----
 def call_advisor_sse(prompt: str):
-    """
-    Yields ({'delta': '...'}, None) for tokens and (None, final_json) once finished.
-    Expects server to send 'data: {...}\\n\\n' lines and a terminal 'data: [DONE]'.
-    """
-    with requests.post(
-        ADVISOR_URL, json={"prompt": prompt, "stream": True}, stream=True, timeout=60
-    ) as resp:
-        resp.raise_for_status()
-        final = None
-        for raw in resp.iter_lines(decode_unicode=True):
-            if not raw:
-                continue
-            if raw == "data: [DONE]":
-                break
-            if raw.startswith("data: "):
-                payload = json.loads(raw[6:])
-                if "delta" in payload:
-                    yield payload, None
-                if "final" in payload:
-                    final = payload["final"]
-        yield None, final
+    """Stream advisor responses using the shared SSE helper."""
+    final = None
+    for evt in stream_sse(
+        ADVISOR_URL, {"prompt": prompt, "stream": True}, timeout_s=60
+    ):
+        data = evt.get("data", {})
+        if "delta" in data:
+            yield data, None
+        if "final" in data:
+            final = data["final"]
+    yield None, final
 
 
 # ----- UI: Title -----
