@@ -10,26 +10,25 @@ def ollama_rerank(query, candidates):
         cfg = yaml.safe_load(f)
     endpoint = cfg.get("ollama", {}).get("endpoint", "http://localhost:11434")
     model = cfg.get("ollama", {}).get("model", "phi3:latest")
-    scores = []
     try:
-        for c in candidates:
-            prompt = f"""
-Given the query and candidate passage, score relevance 0-1 based on keyword
-coverage and HR/internal spec fit.
-Query: {query}
-Passage: {c['section']}\n{c['snippet'][:400]}
-Respond with a float score only.
-"""
-            resp = requests.post(
-                f"{endpoint}/api/generate",
-                json={"model": model, "prompt": prompt, "stream": False},
-                timeout=30,
-            )
-            resp.raise_for_status()
-            score = float(resp.json()["response"].strip())
-            scores.append(score)
+        passages = [f"{c['section']}\n{c['snippet'][:400]}" for c in candidates]
+        payload = {
+            "model": model,
+            "query": query,
+            "passages": passages,
+            "stream": False,
+        }
+        resp = requests.post(
+            f"{endpoint}/api/generate", json=payload, timeout=30
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        responses = data.get("responses", [])
+        scores = [float(r.strip()) for r in responses]
+        if len(scores) != len(candidates):
+            raise ValueError("mismatched response length")
         return scores
-    except requests.RequestException as e:
+    except Exception as e:
         emit("retrieval", {"event": "ollama_rerank_fallback", "err": str(e)})
         return heuristic_rerank(query, candidates)
 
