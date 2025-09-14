@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
+import json
 import time
 
 from app.retrieval import ollama_client
@@ -11,7 +12,11 @@ from app.services.telemetry import emit
 
 def _compose_system_prompt(persona: str) -> str:
     # TODO: load CPO persona from file/env; basic guard for now
-    return "You are HRPro's Chief People Officer. Cite sources with exact anchors (e.g., §1.4.5). If uncertain, say so."
+    return (
+        "You are HRPro's Chief People Officer. Cite sources with exact anchors (e.g., §1.4.5). "
+        "If uncertain, say so. Respond ONLY with valid JSON containing keys: summary (string), findings (array of strings), "
+        "actions (array of strings), and insights (array of strings)."
+    )
 
 
 def _context_block(chunks) -> str:
@@ -64,8 +69,10 @@ def stream_advisor_answer(q: AdvisorQuery, trace_id: str) -> Iterator[dict]:
             }
 
         full = "".join(buffer).strip()
-        # naive parse for now: summary is first 600 chars
-        summary = full[:600]
+        try:
+            payload = json.loads(full)
+        except Exception:
+            payload = {"summary": full, "findings": [], "actions": [], "insights": []}
 
         citations = [
             Citation(
@@ -83,10 +90,10 @@ def stream_advisor_answer(q: AdvisorQuery, trace_id: str) -> Iterator[dict]:
             tag = "no_citation_context"
 
         answer = AdvisorAnswer(
-            summary=summary,
-            findings=[],
-            actions=[],
-            insights=[],
+            summary=payload.get("summary", ""),
+            findings=payload.get("findings", []),
+            actions=payload.get("actions", []),
+            insights=payload.get("insights", []),
             citations=citations,
             explainability_tag=tag,
             trace_id=trace_id,
