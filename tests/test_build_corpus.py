@@ -1,3 +1,7 @@
+import sys
+
+# Ensure tools.build_corpus doesn't parse pytest arguments on import
+sys.argv = ["build_corpus.py"]
 from tools.build_corpus import chunks_from_external
 
 

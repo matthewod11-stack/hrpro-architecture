@@ -1,4 +1,7 @@
 import json
+import pytest
+
+pytest.importorskip("yaml")
 
 
 def test_eval_harness_smoke(monkeypatch, tmp_path):

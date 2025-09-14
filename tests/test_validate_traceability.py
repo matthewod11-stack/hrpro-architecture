@@ -1,5 +1,9 @@
 import csv
 
+import pytest
+
+pytest.importorskip("openpyxl")
+
 from tools import validate_traceability_md as vtm
 
 

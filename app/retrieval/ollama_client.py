@@ -30,17 +30,38 @@ def _log_event(event: str, **kwargs):
 
 def chat(
     model: str, messages: list[dict], stream: bool = False, options: dict | None = None
-) -> dict:
-    # requests imported at top
+):
+    """Call the Ollama chat endpoint.
+
+    If ``stream`` is True an iterator of decoded JSON chunks is returned.
+    Otherwise the full JSON response is returned as a dict.
+    """
 
     url = f"{OLLAMA_URL}/api/chat"
     payload = {"model": model, "messages": messages, "stream": stream}
     if options:
         payload["options"] = options
     try:
-        r = requests.post(url, json=payload, timeout=OLLAMA_TIMEOUT_S)
+        # Always request the HTTP response as a stream so we can iterate
+        # over the chunks even when ``stream`` is False.
+        r = requests.post(
+            url, json=payload, timeout=OLLAMA_TIMEOUT_S, stream=True
+        )
         r.raise_for_status()
-        return r.json()
+
+        def _iter_chunks():
+            for line in r.iter_lines():
+                if not line:
+                    continue
+                try:
+                    yield json.loads(line.decode("utf-8"))
+                except json.JSONDecodeError:
+                    continue
+
+        if stream:
+            return _iter_chunks()
+        data = list(_iter_chunks())
+        return data[-1] if data else {}
     except requests.HTTPError as e:
         _log_event(
             "ollama_http_error",
