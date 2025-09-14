@@ -6,11 +6,6 @@ from app.ui.session_utils import get_trace_id, set_trace_id
 from app.ui.theme import get_palette
 from app.ui.tokens import set_mode
 
-try:
-    from app.utils import telemetry
-except ImportError:
-    telemetry = None
-
 st.title("PIP Builder")
 palette = get_palette()
 st.set_page_config(page_title="PIP Builder", layout="wide")
