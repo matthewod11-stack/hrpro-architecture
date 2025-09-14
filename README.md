@@ -277,9 +277,15 @@ PII redaction is **local**, regex-based, and enabled by default.
 - Patterns masked: emails (`***@***.***`), phones (`***-***-****`), SSN (`***-**-****`)
 - Telemetry includes `pii_redactions` count per trace
 
-## 📈 Telemetry Schema
-All events are written as JSONL in `logs/events_YYYYMMDD.jsonl`.
-- Required fields (auto-validated): `event_name: str`, `trace_id: str`, `ts: float`
-- Common events: `"advisor.final"`, `"advisor.error"`, `"export.done"`, `"ingest.done"`
-- Additional fields: `brand_config_version`, `pii_redactions`, `export_ms`, `rows`, etc.
-See `app/core/telemetry.py` for the validator and writer.
+## 📈 Telemetry
+Use the unified telemetry service in `app/services/telemetry.py`.
+
+```python
+from app.services import telemetry
+
+telemetry.emit("advisor", {"event": "start", "trace_id": "t1"})
+rows = telemetry.tail("advisor", 100)
+```
+
+Events are stored as JSONL files under `telemetry/<name>.jsonl`. The module also
+provides `tail` to read recent events and `rotate` to archive large logs.

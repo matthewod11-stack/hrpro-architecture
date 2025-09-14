@@ -8,7 +8,7 @@ from app.ui.components.retry_banner import retry_banner
 from app.ui.components.toast import toast_success
 from app.ui.theme import get_palette
 from app.ui.tokens import set_mode
-from app.utils import telemetry
+from app.services import telemetry
 
 API_URL = "http://127.0.0.1:8000/v1/data/charts"
 
@@ -94,12 +94,9 @@ try:
         employee_count = len(nine_box_data["cells"])
     elif nine_box_data and nine_box_data.get("series", {}).get("points"):
         employee_count = len(nine_box_data["series"]["points"])
-    telemetry.log(
-        {
-            "event": "dashboard_render",
-            "ms": render_time,
-            "employee_count": employee_count,
-        }
+    telemetry.emit(
+        "dashboard",
+        {"ms": render_time, "employee_count": employee_count},
     )
 except Exception as e:
     print(f"[telemetry] Logging failed: {e}")

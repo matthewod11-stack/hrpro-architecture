@@ -7,11 +7,7 @@ from app.ui.components.toast import toast_error, toast_success
 from app.ui.session_utils import get_trace_id, set_trace_id
 from app.ui.theme import get_palette
 from app.ui.tokens import set_mode
-
-try:
-    from app.utils import telemetry
-except ImportError:
-    telemetry = None
+from app.services import telemetry
 
 st.title("30/60/90 Builder")
 palette = get_palette()
@@ -82,10 +78,10 @@ for i, action in enumerate(actions):
 render_ms = int((time.time() - start_time) * 1000)
 st.caption(f"Render time: {render_ms} ms")
 
-if telemetry:
-    try:
-        telemetry.log(
-            {"event": "builder_render", "builder_type": "306090", "ms": render_ms}
-        )
-    except Exception as e:
-        print(f"[telemetry] Logging failed: {e}")
+try:
+    telemetry.emit(
+        "builder",
+        {"builder_type": "306090", "ms": render_ms},
+    )
+except Exception as e:
+    print(f"[telemetry] Logging failed: {e}")
