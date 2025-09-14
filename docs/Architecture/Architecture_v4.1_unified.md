@@ -127,7 +127,7 @@ graph TD
 Structured JSON: `{ summary, findings[], actions[], insights[], citations[], explainability_tag, trace_id }`.
 
 ### 4.2 Streaming & UX Hooks
-- **SSE:** `stream=true` streams tokens for typing indicator; FE aggregates to final JSON.
+- **SSE:** Advisor always streams tokens for typing indicator; FE aggregates to final JSON.
 
 ### 4.3 Personas & Quick Actions
 - **Persona Hook:** `persona?: string` (e.g., `"cpo"`, `"pm"`).
@@ -142,7 +142,6 @@ Prompt‑injection filters; PII redaction at ingest; response length caps; trace
 {
   "prompt": "Summarize performance trends and suggest a plan.",
   "module": "dashboard",
-  "stream": true,
   "persona": "cpo",
   "quick_action": "MEASURE",
   "page_stats": {"kpis": [{"name":"Attrition","value":12.3,"period":"L12M"}]}
@@ -261,9 +260,9 @@ Prompt‑injection filters; PII redaction at ingest; response length caps; trace
 ## 11) API Updates (v4.1)
 
 ### 11.1 `POST /v1/advisor/answer`
-**Params:** `stream: boolean`, `persona?: string`, `quick_action?: "TIGHTEN"|"MEASURE"|"REFINE"|"BALANCE"`  
-**Request:** *(see §4.4 example)*  
-**Streamed Tokens:** SSE channel emits `data: <token>`; final message `data: [DONE]` → FE composes final JSON.
+**Params:** `persona?: string`, `quick_action?: "TIGHTEN"|"MEASURE"|"REFINE"|"BALANCE"`
+**Request:** *(see §4.4 example)*
+**Streamed Tokens:** SSE channel emits JSON frames (`start`, `delta`, `final`, `ping`). FE aggregates `delta` events and reads the `final` payload for the complete answer.
 
 ### 11.2 `POST /v1/data/charts`
 **Body:** `{ chart_type: "enps"|"nine_box"|..., k: string, ... }`  
