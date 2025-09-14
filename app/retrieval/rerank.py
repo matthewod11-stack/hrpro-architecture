@@ -2,6 +2,8 @@ import numpy as np
 import requests
 import yaml
 
+from app.services.telemetry import emit
+
 
 def ollama_rerank(query, candidates):
     with open("config/retrieval.yaml") as f:
@@ -9,22 +11,27 @@ def ollama_rerank(query, candidates):
     endpoint = cfg.get("ollama", {}).get("endpoint", "http://localhost:11434")
     model = cfg.get("ollama", {}).get("model", "phi3:latest")
     scores = []
-    for c in candidates:
-        prompt = f"""
-Given the query and candidate passage, score relevance 0-1 based on keyword coverage and HR/internal spec fit.
+    try:
+        for c in candidates:
+            prompt = f"""
+Given the query and candidate passage, score relevance 0-1 based on keyword
+coverage and HR/internal spec fit.
 Query: {query}
 Passage: {c['section']}\n{c['snippet'][:400]}
 Respond with a float score only.
 """
-        resp = requests.post(
-            f"{endpoint}/api/generate",
-            json={"model": model, "prompt": prompt, "stream": False},
-            timeout=30,
-        )
-        resp.raise_for_status()
-        score = float(resp.json()["response"].strip())
-        scores.append(score)
-    return scores
+            resp = requests.post(
+                f"{endpoint}/api/generate",
+                json={"model": model, "prompt": prompt, "stream": False},
+                timeout=30,
+            )
+            resp.raise_for_status()
+            score = float(resp.json()["response"].strip())
+            scores.append(score)
+        return scores
+    except requests.RequestException as e:
+        emit("retrieval", {"event": "ollama_rerank_fallback", "err": str(e)})
+        return heuristic_rerank(query, candidates)
 
 
 def heuristic_rerank(query, candidates, must_have=None, nice_to_have=None):
