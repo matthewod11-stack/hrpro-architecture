@@ -6,14 +6,11 @@ import re
 import yaml
 
 from app.retrieval import ollama_client
-
-TELEMETRY_PATH = Path(__file__).parent.parent.parent / "logs/dev_telemetry.jsonl"
+from app.services import telemetry
 
 
 def _log_event(event, **kwargs):
-    line = json.dumps({"event": event, **kwargs})
-    with open(TELEMETRY_PATH, "a") as f:
-        f.write(line + "\n")
+    telemetry.emit("retrieval", {"event": event, **kwargs})
 
 
 def _extract_json(text):
