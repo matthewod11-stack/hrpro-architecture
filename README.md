@@ -214,7 +214,6 @@ First task: <insert here>
 
 You should see: E2E OK • trace=adv_... • citations=N • export=artifacts/demo/...
 3) Open the UI → ask a question → see streaming + citations → click Export Summary.
-4) Telemetry page: ui/pages/99_Telemetry.py shows Advisor & Export events.
 
 ---
 
