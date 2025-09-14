@@ -10,6 +10,7 @@ import yaml
 
 from app.retrieval.query_rewrite import rewrite
 from app.retrieval.rerank import rerank
+from app.services import telemetry
 
 INDEX_DIR = Path(__file__).parent.parent.parent / "versions/index"
 CORPUS_PATH = Path(__file__).parent.parent.parent / "knowledge_base/corpus.jsonl"
@@ -17,13 +18,12 @@ META_PATH = INDEX_DIR / "meta.json"
 MATRIX_PATH = INDEX_DIR / "matrix.npz"
 VEC_PATH = INDEX_DIR / "tfidf.joblib"
 NN_PATH = INDEX_DIR / "nn.joblib"
-TELEMETRY_PATH = Path(__file__).parent.parent.parent / "logs/dev_telemetry.jsonl"
 
-_vectorizer = _matrix = _nn = _meta = None
+_vectorizer = _matrix = _nn = _meta = _corpus_lines = None
 
 
 def _load():
-    global _vectorizer, _matrix, _nn, _meta
+    global _vectorizer, _matrix, _nn, _meta, _corpus_lines
     if _vectorizer is None:
         _vectorizer = joblib.load(VEC_PATH)
     if _matrix is None:
@@ -33,6 +33,9 @@ def _load():
     if _meta is None:
         with open(META_PATH) as f:
             _meta = json.load(f)
+    if _corpus_lines is None:
+        with open(CORPUS_PATH) as f:
+            _corpus_lines = f.readlines()
 
 
 def _expand_synonyms(query):
@@ -96,8 +99,7 @@ def retrieve(topic: str, top_k: int = 5):
     qv = _vectorizer.transform([expanded_query])
     n_candidates = int(config.get("index", {}).get("rerank_candidates", 40))
     dists, idxs = _nn.kneighbors(qv, n_neighbors=n_candidates)
-    with open(CORPUS_PATH) as f:
-        lines = f.readlines()
+    lines = _corpus_lines
     candidates = []
     for rank, (i, dist) in enumerate(zip(idxs[0], dists[0], strict=False)):
         meta = _meta[str(i)]
@@ -135,8 +137,5 @@ def retrieve(topic: str, top_k: int = 5):
     final_results.sort(key=lambda r: r["score"], reverse=True)
     top_k_val = int(config.get("index", {}).get("top_k", top_k))
     elapsed = int((time.time() - t0) * 1000)
-    with open(TELEMETRY_PATH, "a") as f:
-        f.write(
-            json.dumps({"event": "rerank", "used": rerank_used, "ms": elapsed}) + "\n"
-        )
+    telemetry.emit("retrieval", {"used": rerank_used, "ms": elapsed})
     return final_results[:top_k_val]
