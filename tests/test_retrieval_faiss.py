@@ -1,7 +1,10 @@
 import pytest
 
+import pytest
+
 pytest.importorskip("sklearn")
 pytest.importorskip("scipy")
+pytest.importorskip("yaml")
 
 from app.retrieval.adapter import _load, retrieve
 

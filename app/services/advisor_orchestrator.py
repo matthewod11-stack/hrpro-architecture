@@ -40,13 +40,7 @@ def stream_advisor_answer(q: AdvisorQuery, trace_id: str) -> Iterator[dict]:
         ]
         resp = ollama_client.chat(model=model, messages=messages, stream=True)
 
-        # Support both streaming iterators and single dict responses
-        if isinstance(resp, dict):
-            iterator = [resp]
-        else:
-            iterator = resp
-
-        for part in iterator:
+        for part in resp:
             chunk = part.get("message", part.get("response", ""))
             if isinstance(chunk, dict):
                 chunk = chunk.get("content", "")

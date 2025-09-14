@@ -1,7 +1,10 @@
 import pytest
 
 pytest.importorskip("sklearn")
+import pytest
+
 pytest.importorskip("scipy")
+pytest.importorskip("yaml")
 
 import numpy as np
 

@@ -2,6 +2,7 @@ from asgi_lifespan import LifespanManager
 from httpx import AsyncClient
 import pytest
 
+pytest.importorskip("yaml")
 from app.api.main import app
 
 

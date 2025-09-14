@@ -3,6 +3,8 @@ import json
 from fastapi.testclient import TestClient
 import pytest
 
+pytest.importorskip("yaml")
+
 
 @pytest.fixture
 def client(monkeypatch, tmp_path):

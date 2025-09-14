@@ -9,19 +9,18 @@ from app.retrieval import ollama_client
 def test_chat_payload(monkeypatch):
     called = {}
 
-    def fake_post(url, json=None, timeout=None):
+    def fake_post(url, json=None, timeout=None, stream=None):
         called["url"] = url
         called["json"] = json
         called["timeout"] = timeout
+        called["stream"] = stream
 
         class Resp:
             def raise_for_status(self):
                 pass
 
-            def json(self):
-                return {
-                    "message": '{"expanded_query": "foo", "must_have": ["bar"], "nice_to_have": ["baz"]}'
-                }
+            def iter_lines(self):
+                yield b'{"message": "hi"}'
 
         return Resp()
 
@@ -36,6 +35,7 @@ def test_chat_payload(monkeypatch):
     assert called["json"]["model"] == model
     assert called["json"]["messages"] == messages
     assert called["json"]["stream"] is False
+    assert called["stream"] is True
     assert isinstance(result, dict)
 
 
