@@ -1,61 +1,75 @@
-import pytest
-
-pytest.importorskip("sklearn")
-pytest.importorskip("scipy")
-
 import json
-from pathlib import Path
 
+import pytest
 from fastapi.testclient import TestClient
 
 from app.api.main import app
+from app.services import telemetry
 
 
-def get_telemetry_lines():
-    log_path = Path(__file__).parent.parent / "logs/dev_telemetry.jsonl"
-    if not log_path.exists():
-        return []
-    return [json.loads(line) for line in open(log_path)]
+def parse_sse(raw: str) -> list[dict]:
+    events = []
+    for line in raw.splitlines():
+        if line.startswith("data: "):
+            events.append(json.loads(line.split("data: ", 1)[1]))
+    return events
 
 
-client = TestClient(app)
+@pytest.fixture
+def client(monkeypatch, tmp_path):
+    """Test client with stubbed retrieval, model, and telemetry."""
+    monkeypatch.setattr(telemetry, "LOG_DIR", tmp_path / "telemetry", raising=False)
+    telemetry.LOG_DIR.mkdir(parents=True, exist_ok=True)
 
+    from app.services import retrieval
+    from app.retrieval import ollama_client
 
-def test_advisor_returns_attributions():
-    resp = client.post(
-        "/v1/advisor/answer",
-        json={"prompt": "design tokens", "module": "dashboard", "trace_id": "t1"},
+    monkeypatch.setattr(
+        retrieval,
+        "retrieve",
+        lambda q, top_k=6: [
+            {
+                "anchor": "§1.4.5",
+                "source": "PRD_v4.0_unified_numbered.md",
+                "path": "docs/PRD_v4.0_unified_numbered.md",
+                "snippet_start": 0,
+                "snippet": "Advisor responses include sources...",
+                "score": 1.0,
+            }
+        ],
     )
+
+    def fake_chat(**kw):
+        yield {"response": "Hello world."}
+
+    monkeypatch.setattr(ollama_client, "chat", lambda **kw: fake_chat())
+
+    return TestClient(app)
+
+
+def test_advisor_returns_citations(client):
+    resp = client.post("/v1/advisor/answer", json={"query": "design tokens", "top_k": 1})
     assert resp.status_code == 200
-    data = resp.json()
-    assert isinstance(data["source_attributions"], list)
-    assert len(data["source_attributions"]) > 0
-    assert data["guardrail_reason"] is None
+    events = parse_sse(resp.text)
+    final = next(e for e in events if e.get("event") == "final")["answer"]
+    assert isinstance(final["citations"], list)
+    assert len(final["citations"]) > 0
 
 
-def test_advisor_returns_guardrail_reason():
-    resp = client.post(
-        "/v1/advisor/answer",
-        json={"prompt": "gibberishnotfound", "module": "dashboard", "trace_id": "t2"},
-    )
-    assert resp.status_code == 200
-    data = resp.json()
-    assert data["source_attributions"] == []
-    assert data["guardrail_reason"] is not None
+def test_advisor_no_citations_when_missing(client, monkeypatch):
+    from app.services import retrieval
+
+    monkeypatch.setattr(retrieval, "retrieve", lambda q, top_k=6: [])
+    resp = client.post("/v1/advisor/answer", json={"query": "gibberishnotfound"})
+    events = parse_sse(resp.text)
+    final = next(e for e in events if e.get("event") == "final")["answer"]
+    assert final["citations"] == []
 
 
-def test_advisor_telemetry_fields():
-    # Call once to ensure log
-    client.post(
-        "/v1/advisor/answer",
-        json={"prompt": "acceptance criteria", "module": "dashboard", "trace_id": "t3"},
-    )
-    lines = get_telemetry_lines()
-    found = False
-    for line in lines:
-        if line.get("event") == "advisor_response":
-            assert "advisor_ttfa_ms" in line
-            assert "advisor_has_citations" in line
-            assert "retrieved_docs_count" in line
-            found = True
-    assert found
+def test_advisor_telemetry_fields(client, tmp_path):
+    client.post("/v1/advisor/answer", json={"query": "acceptance criteria"})
+    log_path = tmp_path / "telemetry" / "advisor.jsonl"
+    lines = [json.loads(line) for line in log_path.read_text().splitlines()]
+    final = next(l for l in lines if l.get("event") == "final")
+    assert "has_citations" in final
+    assert "total_ms" in final

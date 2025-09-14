@@ -9,14 +9,45 @@ def parse_sse(raw: str):
 
 import json
 
+import pytest
 from fastapi.testclient import TestClient
 
 from app.api.main import app
+from app.services import telemetry
 
-client = TestClient(app)
+
+@pytest.fixture
+def client(monkeypatch, tmp_path):
+    monkeypatch.setattr(telemetry, "LOG_DIR", tmp_path / "telemetry", raising=False)
+    telemetry.LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+    from app.services import retrieval
+    from app.retrieval import ollama_client
+
+    monkeypatch.setattr(
+        retrieval,
+        "retrieve",
+        lambda q, top_k=6: [
+            {
+                "anchor": "§1.4.5",
+                "source": "PRD_v4.0_unified_numbered.md",
+                "path": "docs/PRD_v4.0_unified_numbered.md",
+                "snippet_start": 0,
+                "snippet": "Advisor responses include sources...",
+                "score": 1.0,
+            }
+        ],
+    )
+
+    def fake_chat(**kw):
+        yield {"response": "Hello world."}
+
+    monkeypatch.setattr(ollama_client, "chat", lambda **kw: fake_chat())
+
+    return TestClient(app)
 
 
-def test_advisor_happy():
+def test_advisor_happy(client):
     resp = client.post(
         "/v1/advisor/answer", json={"query": "How do we enforce citations?"}
     )
@@ -44,7 +75,7 @@ def test_advisor_happy():
         assert k in answer
 
 
-def test_advisor_timeout(monkeypatch):
+def test_advisor_timeout(client, monkeypatch):
     def raise_timeout(*a, **kw):
         raise TimeoutError("ollama timeout")
 
@@ -59,7 +90,7 @@ def test_advisor_timeout(monkeypatch):
     assert "trace_id" in err
 
 
-def test_advisor_stream_chunks():
+def test_advisor_stream_chunks(client):
     resp = client.post(
         "/v1/advisor/answer", json={"query": "How do we enforce citations?"}
     )
