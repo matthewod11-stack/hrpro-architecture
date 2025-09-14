@@ -1,12 +1,11 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse, PlainTextResponse
 
-from app.api.routers import advisor, charts, export
+from app.api.routers import advisor, charts
 
 app = FastAPI(title="HRPro API")
 app.include_router(charts.router)
 app.include_router(advisor.router)
-app.include_router(export.router)
 
 
 @app.get("/healthz", response_class=PlainTextResponse, tags=["ops"])  # liveness

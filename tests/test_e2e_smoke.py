@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 
 from fastapi.testclient import TestClient
 import pytest
@@ -39,7 +38,7 @@ def client(monkeypatch, tmp_path):
     return TestClient(app)
 
 
-def test_e2e_smoke_happy_path(client, tmp_path, monkeypatch):
+def test_e2e_smoke_happy_path(client, tmp_path):
     r = client.post(
         "/v1/advisor/answer", json={"query": "x", "persona": "cpo", "top_k": 1}
     )
@@ -52,20 +51,6 @@ def test_e2e_smoke_happy_path(client, tmp_path, monkeypatch):
     final = next(e for e in evts if e.get("event") == "final")["answer"]
     assert final["citations"]
     trace = next(e for e in evts if "trace_id" in e)["trace_id"]
-    payload = {
-        "trace_id": trace,
-        "client": "demo",
-        "module": "advisor",
-        "title": "Advisor Summary",
-        "content": final["summary"] or "x",
-        "branding": {"client_name": "DEMO"},
-    }
-    r2 = client.post("/v1/export/pdf", json=payload)
-    assert r2.status_code == 200
-    p = Path(r2.json()["path"])
-    assert p.exists()
     tdir = tmp_path / "telemetry"
     adv = (tdir / "advisor.jsonl").read_text().splitlines()
-    exp = (tdir / "export.jsonl").read_text().splitlines()
     assert any(trace in x for x in adv)
-    assert any(trace in x for x in exp)
