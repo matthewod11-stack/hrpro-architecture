@@ -148,8 +148,7 @@ api-run:
 
 ui: ## Run Streamlit UI (dev)
 	@echo "Starting Streamlit UI..."
-	@(streamlit run app/ui/Home.py --server.port 8501 || \
-	  streamlit run app/ui/pages/00_Landing.py --server.port 8501)
+	@(streamlit run app/ui/pages/00_Landing.py --server.port 8501)
 
 # Mac launcher to open separate terminals and browser
 launcher: ## Mac: open API & UI in Terminal windows
@@ -161,7 +160,7 @@ launcher: ## Mac: open API & UI in Terminal windows
 	@osascript -e 'tell application "Terminal" to do script "cd $(PWD) && source .venv/bin/activate && export PYTHONPATH=. && uvicorn app.api.main:app --reload --port 8000"' &
 	@sleep 2
 	@echo "Launching Streamlit UI..."
-	@osascript -e 'tell application "Terminal" to do script "cd $(PWD) && source .venv/bin/activate && streamlit run app/ui/Home.py --server.port 8501"' &
+	@osascript -e 'tell application "Terminal" to do script "cd $(PWD) && source .venv/bin/activate && streamlit run app/ui/pages/00_Landing.py --server.port 8501"' &
 	@sleep 2
 	@echo "Opening http://localhost:8501 in browser..."
 	@open "http://localhost:8501"

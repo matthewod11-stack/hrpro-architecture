@@ -46,29 +46,3 @@ def stream_sse(
     # Never throw on partial frames, but raise if no connection
     if last_err:
         raise RuntimeError(f"SSE failed after {max_retries} attempts: {last_err}")
-
-
-def stream_sse(url: str, json_body: dict, timeout_s: int = 30) -> Iterator[dict]:
-    try:
-        with requests.post(
-            url, json=json_body, stream=True, timeout=(10, timeout_s)
-        ) as resp:
-            trace_id = None
-            for line in resp.iter_lines():
-                if isinstance(line, bytes):
-                    line = line.decode()
-                if line.startswith("data: "):
-                    try:
-                        evt = json.loads(line[6:])
-                        trace_id = evt.get("trace_id", trace_id)
-                        yield evt
-                    except Exception as e:
-                        yield {
-                            "event": "error",
-                            "message": str(e),
-                            "trace_id": trace_id,
-                        }
-                elif line.strip() == "":
-                    continue
-    except Exception as e:
-        yield {"event": "error", "message": str(e), "trace_id": None}
