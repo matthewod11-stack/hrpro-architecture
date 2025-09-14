@@ -38,19 +38,28 @@ def stream_advisor_answer(q: AdvisorQuery, trace_id: str) -> Iterator[dict]:
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ]
-        resp = ollama_client.chat(model=model, messages=messages, stream=False)
-        txt = resp.get("message", resp.get("response", ""))
-        if isinstance(txt, dict):
-            txt = txt.get("content", "")
-        if txt:
-            buffer.append(txt)
+        resp = ollama_client.chat(model=model, messages=messages, stream=True)
+
+        # Support both streaming iterators and single dict responses
+        if isinstance(resp, dict):
+            iterator = [resp]
+        else:
+            iterator = resp
+
+        for part in iterator:
+            chunk = part.get("message", part.get("response", ""))
+            if isinstance(chunk, dict):
+                chunk = chunk.get("content", "")
+            if not chunk:
+                continue
+            buffer.append(chunk)
             if not ttfa_emitted:
                 ttfa = int((time.perf_counter() - t0) * 1000)
                 emit("advisor", {"event": "ttfa", "trace_id": trace_id, "ms": ttfa})
                 ttfa_emitted = True
             yield {
                 "event": "delta",
-                "text": txt,
+                "text": chunk,
                 "trace_id": trace_id,
             }
 
