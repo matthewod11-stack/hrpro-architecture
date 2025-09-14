@@ -1,12 +1,13 @@
 """Home page for the HRPro UI."""
 
-from datetime import datetime
 import json
-import os
 import time
 
 import requests
 import streamlit as st
+
+from app.config import API_BASE_URL
+from app.ui.state import emit_telemetry
 
 # ----- Page setup -----
 st.set_page_config(page_title="HRPro", layout="wide")
@@ -19,17 +20,7 @@ MODULES = [
     ("PIP Builder", "pages/4_PIP_Builder.py", "#1890FF"),
     ("JD Builder", "pages/5_JD_Builder.py", "#722ED1"),
 ]
-
-ADVISOR_URL = "http://127.0.0.1:8001/v1/advisor/answer"
-LOG_PATH = "logs/dev_telemetry.jsonl"
-
-
-# ----- Tiny telemetry helpers -----
-def log_event(event: str, payload: dict):
-    os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
-    rec = {"ts": datetime.utcnow().isoformat() + "Z", "event": event, **payload}
-    with open(LOG_PATH, "a") as f:
-        f.write(json.dumps(rec) + "\n")
+ADVISOR_URL = f"{API_BASE_URL}/v1/advisor/answer"
 
 
 # ----- SSE client (no external deps) -----
@@ -126,7 +117,7 @@ def advisor_block(prompt: str):
                 if not first_token_emitted:
                     ttfa_ms = int((time.perf_counter() - start) * 1000)
                     first_token_emitted = True
-                    log_event(
+                    emit_telemetry(
                         "time_to_first_answer_ms",
                         {"trace_id": pending_trace, "ms": ttfa_ms},
                     )
@@ -143,19 +134,21 @@ def advisor_block(prompt: str):
             trace_id = final.get("trace_id", "n/a")
             if first_token_emitted:
                 ttfa_ms2 = int((time.perf_counter() - start) * 1000)
-                log_event(
+                emit_telemetry(
                     "time_to_first_answer_ms", {"trace_id": trace_id, "ms": ttfa_ms2}
                 )
 
             has_cite = bool(final.get("citations"))
-            log_event(
+            emit_telemetry(
                 "advisor_response_has_citation",
                 {"trace_id": trace_id, "has_citation": has_cite},
             )
 
             summary.write(f"**Summary:** {final.get('summary','')}")
             meta.caption(
-                f"Citations: {', '.join(final.get('citations', []))} • trace_id: {trace_id}"
+                "Citations: "
+                + ", ".join(final.get("citations", []))
+                + f" • trace_id: {trace_id}"
             )
         else:
             banner.error("Advisor stream ended unexpectedly. Click retry to try again.")
