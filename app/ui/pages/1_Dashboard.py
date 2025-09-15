@@ -4,19 +4,23 @@ import pandas as pd
 import requests
 import streamlit as st
 
+from app.config import API_BASE_URL
 from app.ui.components.retry_banner import retry_banner
 from app.ui.components.toast import toast_success
+from app.ui.state import emit_telemetry
 from app.ui.theme import get_palette
 from app.ui.tokens import set_mode
-from app.services import telemetry
 
-API_URL = "http://127.0.0.1:8000/v1/data/charts"
+API_URL = f"{API_BASE_URL}/v1/data/charts"
 
 st.title("Dashboard")
 palette = get_palette()
 st.set_page_config(page_title="Dashboard", layout="wide")
 st.markdown(
-    f"<div style='background:{palette['header']};color:{palette['text']};padding:8px;font-size:1.5em;'>Dashboard</div>",
+    (
+        f"<div style='background:{palette['header']};color:{palette['text']};"
+        "padding:8px;font-size:1.5em;'>Dashboard</div>"
+    ),
     unsafe_allow_html=True,
 )
 mode = st.sidebar.radio("Theme", ["light", "dark"], index=0)
@@ -85,18 +89,14 @@ render_time = int((time.time() - start_time) * 1000)
 st.caption(f"Render time: {render_time} ms")
 
 # Telemetry logging
-try:
-    # Try to get employee count from either chart
-    employee_count = 0
-    if enps_data and enps_data.get("series", {}).get("points"):
-        employee_count = len(enps_data["series"]["points"])
-    elif nine_box_data and nine_box_data.get("cells"):
-        employee_count = len(nine_box_data["cells"])
-    elif nine_box_data and nine_box_data.get("series", {}).get("points"):
-        employee_count = len(nine_box_data["series"]["points"])
-    telemetry.emit(
-        "dashboard",
-        {"ms": render_time, "employee_count": employee_count},
-    )
-except Exception as e:
-    print(f"[telemetry] Logging failed: {e}")
+employee_count = 0
+if enps_data and enps_data.get("series", {}).get("points"):
+    employee_count = len(enps_data["series"]["points"])
+elif nine_box_data and nine_box_data.get("cells"):
+    employee_count = len(nine_box_data["cells"])
+elif nine_box_data and nine_box_data.get("series", {}).get("points"):
+    employee_count = len(nine_box_data["series"]["points"])
+emit_telemetry(
+    "dashboard",
+    {"ms": render_time, "employee_count": employee_count},
+)

@@ -1,10 +1,7 @@
-import json
-import time
-
 import streamlit as st
 
 from app.ui.components.tiles import render_tiles
-from app.ui.state import route_to_advisor, set_seed_query
+from app.ui.state import emit_telemetry, route_to_advisor, set_seed_query
 from app.ui.tokens import BG_SURFACE, FG_MUTED, RADIUS_MD, SPACE_MD
 
 SUGGESTED = [
@@ -19,10 +16,14 @@ SUGGESTED = [
 st.set_page_config(page_title="HRPro Landing", page_icon="🏢")
 
 st.markdown(
-    f"<div style='background:{BG_SURFACE};padding:{SPACE_MD}px;border-radius:{RADIUS_MD}px;'>"
-    "<h1>HRPro</h1>"
-    "<span style='color:{};font-size:1.1em'>Unified HR architecture. Ask your CPO, explore dashboards, and more.</span>"
-    "</div>".format(FG_MUTED),
+    (
+        f"<div style='background:{BG_SURFACE};padding:{SPACE_MD}px;"
+        f"border-radius:{RADIUS_MD}px;'>"
+        "<h1>HRPro</h1>"
+        "<span style='color:{};font-size:1.1em'>"
+        "Unified HR architecture. Ask your CPO, explore dashboards, and more." "</span>"
+        "</div>".format(FG_MUTED)
+    ),
     unsafe_allow_html=True,
 )
 
@@ -38,17 +39,14 @@ ask_clicked = st.button("Ask", key="landing_ask")
 if ask_clicked and q:
     set_seed_query(q)
     route_to_advisor(q)
-    telemetry = {
-        "ts": int(time.time()),
-        "page": "landing",
-        "action": "route_to_advisor",
-        "query_len": len(q),
-    }
-    try:
-        with open("logs/ui.jsonl", "a") as f:
-            f.write(json.dumps(telemetry) + "\n")
-    except Exception:
-        pass
+    emit_telemetry(
+        "ui",
+        {
+            "page": "landing",
+            "action": "route_to_advisor",
+            "query_len": len(q),
+        },
+    )
 
 st.markdown("#### Suggested prompts")
 chip_cols = st.columns(len(SUGGESTED))
@@ -57,17 +55,14 @@ for i, prompt in enumerate(SUGGESTED):
         if st.button(prompt, key=f"suggested_{i}"):
             set_seed_query(prompt)
             route_to_advisor(prompt)
-            telemetry = {
-                "ts": int(time.time()),
-                "page": "landing",
-                "action": "route_to_advisor",
-                "query_len": len(prompt),
-            }
-            try:
-                with open("logs/ui.jsonl", "a") as f:
-                    f.write(json.dumps(telemetry) + "\n")
-            except Exception:
-                pass
+            emit_telemetry(
+                "ui",
+                {
+                    "page": "landing",
+                    "action": "route_to_advisor",
+                    "query_len": len(prompt),
+                },
+            )
 
 st.divider()
 render_tiles()

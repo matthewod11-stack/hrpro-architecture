@@ -1,12 +1,13 @@
-import json
-import os
+"""Advisor page: stream responses and show citations."""
+
 import time
 
 import streamlit as st
 
+from app.config import API_BASE_URL
 from app.ui.components.citations import render_citations
 from app.ui.components.sse import stream_sse
-from app.ui.state import clear_advisor_state, get_state, set_state
+from app.ui.state import clear_advisor_state, emit_telemetry, get_state, set_state
 
 st.set_page_config(page_title="Ask your CPO", page_icon="🤖")
 st.title("Ask your CPO")
@@ -36,7 +37,7 @@ if submit or (query_param and not get_state("advisor_final")):
     st.session_state["advisor_final"] = None
     placeholder = st.empty()
     status = st.empty()
-    url = os.environ.get("ADVISOR_URL", "http://localhost:8000/v1/advisor/answer")
+    url = f"{API_BASE_URL}/v1/advisor/answer"
     body = {"query": question, "persona": "cpo", "top_k": 6, "workspace": workspace}
     start = time.time()
     ttfa_ms = None
@@ -85,22 +86,19 @@ if submit or (query_param and not get_state("advisor_final")):
             st.button(
                 "Copy trace ID",
                 key="copy_trace_id",
-                on_click=lambda t=trace_id: st.session_state.update(
-                    {"copied_trace_id": t}
+                on_click=lambda trace_id=trace_id: st.session_state.update(
+                    {"copied_trace_id": trace_id}
                 ),
             )
             total_ms = int((time.time() - start) * 1000)
-            telemetry = {
-                "ts": int(time.time()),
-                "page": "advisor",
-                "trace_id": trace_id,
-                "ttfa_ms": ttfa_ms,
-                "total_ms": total_ms,
-                "query_len": len(question),
-            }
-            try:
-                with open("logs/ui.jsonl", "a") as f:
-                    f.write(json.dumps(telemetry) + "\n")
-            except Exception:
-                pass
+            emit_telemetry(
+                "ui",
+                {
+                    "page": "advisor",
+                    "trace_id": trace_id,
+                    "ttfa_ms": ttfa_ms,
+                    "total_ms": total_ms,
+                    "query_len": len(question),
+                },
+            )
             break
