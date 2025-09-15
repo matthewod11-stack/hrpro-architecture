@@ -1,5 +1,7 @@
 import streamlit as st
 
+from app.services import telemetry
+
 
 def set_seed_query(text: str):
     st.session_state["seed_query"] = text
@@ -45,3 +47,10 @@ def clear_advisor_state():
     ]:
         if k in st.session_state:
             del st.session_state[k]
+
+
+def emit_telemetry(name: str, payload: dict) -> None:
+    try:
+        telemetry.emit(name, payload)
+    except Exception as e:
+        print(f"[telemetry] Logging failed: {e}")
