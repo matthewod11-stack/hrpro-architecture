@@ -206,7 +206,7 @@ First task: <insert here>
 ## ⚡ Quickstart: 3-minute demo
 1) Start services (two terminals):
    - API: `uvicorn app.api.main:app --reload --port 8000`
-   - UI:  `streamlit run ui/Home.py`  (or your entrypoint)
+   - UI:  `streamlit run app/ui/pages/00_Landing.py`
 2) Run the end-to-end smoke:
    ```bash
    make demo
